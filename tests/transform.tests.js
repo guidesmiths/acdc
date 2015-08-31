@@ -1,4 +1,3 @@
-var Domain = require('domain')
 var assert = require('assert')
 var acdc = require('..')
 var flow = require('../lib/tasks/flow')
@@ -13,14 +12,16 @@ describe('AC/DC', function() {
 
     it('should execute a task', function(done) {
         var executed = false
-        acdc({
-            task: {
-                fn: function dummy(input, ctx, cb) {
-                    executed = true
-                    cb()
+        acdc().transform().using(function(dsl, cb) {
+            cb({
+                task: {
+                    fn: function dummy(input, ctx, cb) {
+                        executed = true
+                        cb()
+                    }
                 }
-            }
-        }, function(err) {
+            })
+        }).done(function(err) {
             assert.ifError(err)
             assert.ok(executed)
             done()
@@ -28,13 +29,15 @@ describe('AC/DC', function() {
     })
 
     it('should yield a result', function(done) {
-        acdc({
-            task: {
-                fn: function dummy(input, ctx, cb) {
-                    cb(null, 123)
+        acdc().transform().using(function(dsl, cb) {
+            cb({
+                task: {
+                    fn: function dummy(input, ctx, cb) {
+                        cb(null, 123)
+                    }
                 }
-            }
-        }, function(err, result) {
+            })
+        }).done(function(err, result) {
             assert.ifError(err)
             assert.equal(result, 123)
             done()
@@ -42,29 +45,31 @@ describe('AC/DC', function() {
     })
 
     it('should yield errors', function(done) {
-        acdc({
-            task: {
-                fn: function dummy(input, ctx, cb) {
-                    cb(new Error('nothing to see here'))
+        acdc().transform().using(function(dsl, cb) {
+            cb({
+                task: {
+                    fn: function dummy(input, ctx, cb) {
+                        cb(new Error('nothing to see here'))
+                    }
                 }
-            }
-        }, function(err, result) {
-            Domain.create().on('error', done).run(function() {
-                assert.ok(err)
-                assert.equal(err.message, 'nothing to see here')
-                done()
             })
+        }).done(function(err, result) {
+            assert.ok(err)
+            assert.equal(err.message, 'nothing to see here')
+            done()
         })
     })
 
     it('shoud yield thrown errors', function(done) {
-        acdc({
-            task: {
-                fn: function dummy(input, ctx, cb) {
-                    throw new Error('nothing to see here')
+        acdc().transform().using(function(dsl, cb) {
+            cb({
+                task: {
+                    fn: function dummy(input, ctx, cb) {
+                        throw new Error('nothing to see here')
+                    }
                 }
-            }
-        }, function(err, result) {
+            })
+        }).done(function(err, result) {
             assert.ok(err)
             assert.equal(err.message, 'nothing to see here')
             done()
@@ -72,15 +77,17 @@ describe('AC/DC', function() {
     })
 
     it('shoud yield thrown errors in async code', function(done) {
-        acdc({
-            task: {
-                fn: function dummy(input, ctx, cb) {
-                    setImmediate(function() {
-                        throw new Error('nothing to see here')
-                    })
+        acdc().transform().using(function(dsl, cb) {
+            cb({
+                task: {
+                    fn: function dummy(input, ctx, cb) {
+                        setImmediate(function() {
+                            throw new Error('nothing to see here')
+                        })
+                    }
                 }
-            }
-        }, function(err, result) {
+            })
+        }).done(function(err, result) {
             assert.ok(err)
             assert.equal(err.message, 'nothing to see here')
             done()
@@ -88,17 +95,19 @@ describe('AC/DC', function() {
     })
 
     it('shoud yield errors thrown from synchronous code wrapped by async', function(done) {
-        acdc({
-            task: {
-                fn: function dummy(input, ctx, cb) {
-                    async.series([
-                        function() {
-                            throw new Error('nothing to see here')
-                        }
-                    ])
+        acdc().transform().using(function(dsl, cb) {
+            cb({
+                task: {
+                    fn: function dummy(input, ctx, cb) {
+                        async.series([
+                            function() {
+                                throw new Error('nothing to see here')
+                            }
+                        ])
+                    }
                 }
-            }
-        }, function(err, result) {
+            })
+        }).done(function(err, result) {
             assert.ok(err)
             assert.equal(err.message, 'nothing to see here')
             done()
@@ -106,9 +115,8 @@ describe('AC/DC', function() {
     })
 
     it('should support complex conversion flows', function(done) {
-        acdc(
-            { a: 'x', b: 'y' },
-            {
+        acdc().transform({ a: 'x', b: 'y' }).using(function(dsl, cb) {
+            cb({
                 task: flow.sequence,
                 params: {
                     tasks: [
@@ -140,41 +148,53 @@ describe('AC/DC', function() {
                         }
                     ]
                 }
-            }, function(err, result) {
-                assert.ifError(err)
-                assert.equal(result, 'x/y')
-                done()
-            }
-        )
+            })
+        }).done(function(err, result) {
+            assert.ifError(err)
+            assert.equal(result, 'x/y')
+            done()
+        })
     })
 
     it('should support shorthand syntax', function(done) {
-        with (R.mergeAll([flow, selectors, mutators, transformation, dsl])) {
-
-            alias('get', getProperty)
-            alias('set', setProperty)
-            alias('copy', copyProperty)
-            alias('transform', transformProperty)
-
-            acdc(
-                { a: 'x', b: 'y' },
-                sequence([
-                    fork({
-                        a: get('a'),
-                        b: get('b')
-                    }),
-                    task(function slash(input, ctx, cb) {
-                        cb(null, input.a + '/' + input.b)
-                    }),
-                    set('z'),
-                    copy('z', 'z2'),
-                    transform('z2', uppercase(), 'Z2')
-                ]), function(err, result) {
-                    assert.ifError(err)
-                    assert.equal(result.Z2, 'X/Y')
-                    done()
+        acdc().bind(flow)
+            .bind(dsl.task)
+            .bind(selectors.getProperty).alias('get')
+            .bind(mutators.setProperty).alias('set')
+            .bind(transformation.copyProperty).alias('copy')
+            .bind(transformation.map).alias('map')
+            .bind(transformation.transformProperty).alias('transform')
+            .bind(transformation.uppercase).alias('uppercase')
+            .transform({ a: 'x', b: 'y' })
+            .using(function(dsl, cb) {
+                with (dsl) {
+                    cb(sequence([
+                        fork({
+                            a: get('a'),
+                            b: get('b')
+                        }),
+                        task(function slash(input, ctx, cb) {
+                            cb(null, input.a + '/' + input.b)
+                        }),
+                        set('z'),
+                        copy('z', 'z2'),
+                        transform('z2', uppercase(), 'Z2')
+                    ]))
                 }
-            )
-        }
+            })
+            .done(function(err, result) {
+                assert.ifError(err)
+                assert.equal(result.Z2, 'X/Y')
+
+                assert.equal(typeof sequence, 'undefined')
+                assert.equal(typeof fork, 'undefined')
+                assert.equal(typeof get, 'undefined')
+                assert.equal(typeof set, 'undefined')
+                assert.equal(typeof copy, 'undefined')
+                assert.equal(typeof transform, 'undefined')
+                assert.equal(typeof task, 'undefined')
+
+                done()
+            })
     })
 })
