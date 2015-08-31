@@ -6,9 +6,8 @@ JavaScript object transformation
 var assert = require('assert')
 var transform = require('acdc')
 var flow = require('../lib/tasks/flow')
-var selectors = require('../lib/tasks/selectors')
-var mutators = require('../lib/tasks/mutators')
-var transformation = require('../lib/tasks/transformation')
+var properties = require('../lib/tasks/properties')
+var string = require('../lib/tasks/string')
 var dsl = require('../lib/dsl')
 
 acdc().bind(flow)
