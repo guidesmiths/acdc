@@ -12,6 +12,7 @@
     "json-pointer": "^0.3.0",
     "json-stringify-safe": "^5.0.1",
     "merge-defaults": "^0.2.1",
+    "moment": "^2.10.6",
     "ramda": "^0.17.1",
     "require-all": "^1.1.0"
   },
