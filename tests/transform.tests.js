@@ -162,9 +162,9 @@ describe('AC/DC', function() {
             .bind(selectors.getProperty).alias('get')
             .bind(mutators.setProperty).alias('set')
             .bind(transformation.copyProperty).alias('copy')
-            .bind(transformation.map).alias('map')
+            .bind(transformation.map)
             .bind(transformation.transformProperty).alias('transform')
-            .bind(transformation.uppercase).alias('uppercase')
+            .bind(transformation.uppercase)
             .transform({ a: 'x', b: 'y' })
             .using(function(dsl, cb) {
                 with (dsl) {

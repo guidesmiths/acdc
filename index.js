@@ -23,19 +23,20 @@ module.exports = function acdc() {
         return (_bindMethods[typeof subject] || _bindMethods.invalid)(subject)
     }
 
-    function _bindFunction(fn) {
-        if (fn.name) _bindProperty(fn.name, fn)
+    function _bindFunction(subject) {
+        var name = subject.name || subject.fn && subject.fn.name
+        if (name) _bindProperty(name, subject)
 
         return {
-            bind: fn.name ? _bind : _bail.bind(null, 'You must alias anonymous functions'),
-            alias: _alias.bind(null, fn),
-            transform: fn.name ? _transform : _bail.bind(null, 'You must alias anonymous functions')
+            bind: name ? _bind : _bail.bind(null, 'You must alias anonymous functions'),
+            alias: _alias.bind(null, subject),
+            transform: name ? _transform : _bail.bind(null, 'You must alias anonymous functions')
         }
     }
 
-    function _bindObject(obj) {
-        R.keys(obj).forEach(function(name) {
-            _bindProperty(name, obj[name])
+    function _bindObject(subject) {
+        R.keys(subject).forEach(function(name) {
+            _bindProperty(name, subject[name])
         })
 
         return {
