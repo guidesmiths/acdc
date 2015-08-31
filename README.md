@@ -17,7 +17,7 @@ acdc().bind(flow)
     .bind(string)
     .transform({ a: 'x', b: 'y' })
     .using(function(dsl, cb) {
-        with (dsl) {
+        with(dsl) {
             cb(sequence([
                 fork({
                     a: get('a'),
