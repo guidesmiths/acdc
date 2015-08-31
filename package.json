@@ -1,0 +1,37 @@
+{
+  "name": "acdc",
+  "version": "0.1.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "async": "^1.4.2",
+    "debug": "^2.2.0",
+    "joi": "^6.6.1",
+    "json-pointer": "^0.3.0",
+    "json-stringify-safe": "^5.0.1",
+    "merge-defaults": "^0.2.1",
+    "ramda": "^0.17.1",
+    "require-all": "^1.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "husky": "^0.9.3",
+    "json-pointer": "^0.3.0",
+    "lodash": "^3.10.1",
+    "eslint": "^0.23.0",
+    "eslint-config-imperative": "^0.0.6",
+    "eslint-plugin-imperative": "^0.0.2"
+  },
+  "scripts": {
+    "test": "mocha --recursive tests"
+  },
+  "author": "GuideSmiths",
+  "license": "ISC",
+  "description": "JavaScript object transformation",
+  "keywords": [
+    "Object",
+    "Transformation"
+  ]
+}
