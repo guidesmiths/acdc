@@ -15,20 +15,20 @@ acdc().bind(flow)
     .bind(dsl.task)
     .bind(property)
     .bind(string)
-    .transform({ a: 'x', b: 'y' })
+    .transform({ a: ['x'], b: ['y'] })
     .using(function(dsl, cb) {
         with(dsl) {
             cb(sequence([
                 fork({
-                    a: get('a'),
-                    b: get('b')
-                }),
+                    a: get('a[0]'),                     // yields 'x'
+                    b: get('b[0]')                      // yields 'y'
+                }),                                     // yields { a: 'x', b: 'y' }
                 task(function slash(input, ctx, cb) {
-                    cb(null, input.a + '/' + input.b)
-                }),
-                set('z'),
-                copy('z', 'z2'),
-                transform('z2', uppercase(), 'Z2')
+                    cb(null, input.a + '/' + input.b)   
+                }),                                     // yields 'x/y'
+                set('z'),                               // yields { z: 'x/y' }
+                copy('z', 'z2'),                        // yields { z2: 'x/y' }
+                transform('z2', uppercase(), 'Z2')      // yields { Z2: 'X/Y' }
             ]))
         }
     })
