@@ -1,4 +1,4 @@
-# AC/CD
+# AC/DC
 
 JavaScript object transformation
 
