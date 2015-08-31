@@ -14,7 +14,7 @@ acdc().bind(flow)
     .bind(dsl.task)
     .bind(property)
     .bind(string)
-    .transform(function(dsl, cb) {
+    .run(function(dsl, cb) {
         with(dsl) {
             cb(sequence([
                 input({ a: ['x'], b: ['y'] }),          // yields { a: ['x'], b: ['y'] }
