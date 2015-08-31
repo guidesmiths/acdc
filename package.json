@@ -33,5 +33,13 @@
   "keywords": [
     "Object",
     "Transformation"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guidesmiths/acdc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guidesmiths/acdc/issues"
+  },
+  "homepage": "https://github.com/guidesmiths/acdc"
 }
