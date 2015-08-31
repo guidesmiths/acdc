@@ -9,7 +9,7 @@ var dsl = require('../lib/dsl')
 var async = require('async')
 var R = require('ramda')
 
-describe('ACDC', function() {
+describe('AC/DC', function() {
 
     it('should execute a task', function(done) {
         var executed = false
