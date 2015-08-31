@@ -38,6 +38,6 @@ acdc()
         }
     })
     .done(function(err, result) {
-        assert.equal(result.Z1, 'X/Y')
+        assert.equal(result.Z2, 'X/Y')
     })
 ```
