@@ -1,6 +1,6 @@
 var Domain = require('domain')
 var assert = require('assert')
-var transform = require('..')
+var acdc = require('..')
 var flow = require('../lib/tasks/flow')
 var selectors = require('../lib/tasks/selectors')
 var mutators = require('../lib/tasks/mutators')
@@ -13,7 +13,7 @@ describe('AC/DC', function() {
 
     it('should execute a task', function(done) {
         var executed = false
-        transform({
+        acdc({
             task: {
                 fn: function dummy(ctx, cb) {
                     executed = true
@@ -21,32 +21,28 @@ describe('AC/DC', function() {
                 }
             }
         }, function(err) {
-            Domain.create().on('error', done).run(function() {
-                assert.ifError(err)
-                assert.ok(executed)
-                done()
-            })
+            assert.ifError(err)
+            assert.ok(executed)
+            done()
         })
     })
 
     it('should yield a result', function(done) {
-        transform({
+        acdc({
             task: {
                 fn: function dummy(ctx, cb) {
                     cb(null, 123)
                 }
             }
         }, function(err, result) {
-            Domain.create().on('error', done).run(function() {
-                assert.ifError(err)
-                assert.equal(result, 123)
-                done()
-            })
+            assert.ifError(err)
+            assert.equal(result, 123)
+            done()
         })
     })
 
     it('should yield errors', function(done) {
-        transform({
+        acdc({
             task: {
                 fn: function dummy(ctx, cb) {
                     cb(new Error('nothing to see here'))
@@ -62,23 +58,21 @@ describe('AC/DC', function() {
     })
 
     it('shoud yield thrown errors', function(done) {
-        transform({
+        acdc({
             task: {
                 fn: function dummy(ctx, cb) {
                     throw new Error('nothing to see here')
                 }
             }
         }, function(err, result) {
-            Domain.create().on('error', done).run(function() {
-                assert.ok(err)
-                assert.equal(err.message, 'nothing to see here')
-                done()
-            })
+            assert.ok(err)
+            assert.equal(err.message, 'nothing to see here')
+            done()
         })
     })
 
     it('shoud yield thrown errors in async code', function(done) {
-        transform({
+        acdc({
             task: {
                 fn: function dummy(ctx, cb) {
                     setImmediate(function() {
@@ -87,16 +81,14 @@ describe('AC/DC', function() {
                 }
             }
         }, function(err, result) {
-            Domain.create().on('error', done).run(function() {
-                assert.ok(err)
-                assert.equal(err.message, 'nothing to see here')
-                done()
-            })
+            assert.ok(err)
+            assert.equal(err.message, 'nothing to see here')
+            done()
         })
     })
 
     it('shoud yield errors thrown from synchronous code wrapped by async', function(done) {
-        transform({
+        acdc({
             task: {
                 fn: function dummy(ctx, cb) {
                     async.series([
@@ -107,16 +99,14 @@ describe('AC/DC', function() {
                 }
             }
         }, function(err, result) {
-            Domain.create().on('error', done).run(function() {
-                assert.ok(err)
-                assert.equal(err.message, 'nothing to see here')
-                done()
-            })
+            assert.ok(err)
+            assert.equal(err.message, 'nothing to see here')
+            done()
         })
     })
 
     it('should support complex conversion flows', function(done) {
-        transform(
+        acdc(
             { a: 'x', b: 'y' },
             {
                 task: flow.sequence,
@@ -151,11 +141,9 @@ describe('AC/DC', function() {
                     ]
                 }
             }, function(err, result) {
-                Domain.create().on('error', done).run(function() {
-                    assert.ifError(err)
-                    assert.equal(result, 'x/y')
-                    done()
-                })
+                assert.ifError(err)
+                assert.equal(result, 'x/y')
+                done()
             }
         )
     })
@@ -166,8 +154,9 @@ describe('AC/DC', function() {
             alias('get', getProperty)
             alias('set', setProperty)
             alias('copy', copyProperty)
+            alias('transform', transformProperty)
 
-            transform(
+            acdc(
                 { a: 'x', b: 'y' },
                 sequence([
                     fork({
@@ -178,13 +167,12 @@ describe('AC/DC', function() {
                         cb(null, ctx.input.a + '/' + ctx.input.b)
                     }),
                     set('z'),
-                    copy('z', 'z2')
+                    copy('z', 'z2'),
+                    transform('z2', uppercase(), 'Z2')
                 ]), function(err, result) {
-                    Domain.create().on('error', done).run(function() {
-                        assert.ifError(err)
-                        assert.equal(result.z2, 'x/y')
-                        done()
-                    })
+                    assert.ifError(err)
+                    assert.equal(result.Z2, 'X/Y')
+                    done()
                 }
             )
         }
