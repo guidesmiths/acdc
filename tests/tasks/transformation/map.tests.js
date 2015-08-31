@@ -4,14 +4,6 @@ var transformation = require('../../../lib/tasks/transformation')
 
 describe('Map', function() {
 
-    it('should require a task parameter', function(done) {
-        map(function(err) {
-            assert.ok(err)
-            assert.equal(err.message, 'child "params" fails because [child "task" fails because ["task" is required]]')
-            done()
-        })
-    })
-
     it('should require iterable input', function(done) {
         map(1, {}, function(err) {
             assert.ok(err)
@@ -20,8 +12,8 @@ describe('Map', function() {
         })
     })
 
-    it('should require task param', function(done) {
-        map([], {}, function(err) {
+    it('should require a task parameter', function(done) {
+        map({}, undefined, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "task" fails because ["task" is required]]')
             done()
@@ -30,8 +22,8 @@ describe('Map', function() {
 
     it('should map an array', function(done) {
         map(['a', 'b', 'c'], { task: {
-                fn: function uppercase(ctx, cb) {
-                    cb(null, ctx.input.toUpperCase())
+                fn: function uppercase(input, ctx, cb) {
+                    cb(null, input.toUpperCase())
                 }
             }
         }, function(err, results) {
@@ -46,8 +38,8 @@ describe('Map', function() {
 
     it('should map an object', function(done) {
         map({ a: 'a', b: 'b', c: 'c'}, { task: {
-                fn: function uppercase(ctx, cb) {
-                    cb(null, ctx.input.value.toUpperCase())
+                fn: function uppercase(input, ctx, cb) {
+                    cb(null, input.value.toUpperCase())
                 }
             }
         }, function(err, results) {
@@ -63,7 +55,7 @@ describe('Map', function() {
     it('should yield mapping errors', function(done) {
         map([1, 2, 3], {
             task: {
-                fn: function(ctx, cb) {
+                fn: function(input, ctx, cb) {
                     cb(new Error('nothing to see here'))
                 }
             }
@@ -75,10 +67,7 @@ describe('Map', function() {
     })
 
     function map(input, params, cb) {
-        if (arguments.length === 1) return map(undefined, undefined, arguments[0])
-        if (arguments.length === 2) return map(undefined, arguments[0], arguments[1])
-        flow.run.fn({
-            input: input || {},
+        flow.run.fn(input, {
             params: {
                 task: transformation.map,
                 params: params

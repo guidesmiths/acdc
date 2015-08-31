@@ -20,12 +20,30 @@ describe('Get Property', function() {
         })
     })
 
-    it('should get the value specified by the path', function(done) {
-        getProperty({ a: [
-            { b: 2 }
-        ]} , { path: 'a[0].b' }, function(err, result) {
+    it('should get a copy of the value specified by the path', function(done) {
+        var input = {
+            a: [
+                { b: 2 }
+            ]
+        }
+        getProperty(input, { path: 'a[0]' }, function(err, result) {
             assert.ifError(err)
-            assert.strictEqual(result, 2)
+            assert.deepEqual(result, { b: 2 })
+            assert.equal(result === input.a[0], false)
+            done()
+        })
+    })
+
+    it('should return a copy of the input if the path is empty', function(done) {
+        var input = {
+            a: [
+                { b: 2 }
+            ]
+        }
+        getProperty(input, { path: '' }, function(err, result) {
+            assert.ifError(err)
+            assert.deepEqual(result, input)
+            assert.equal(result === input, false)
             done()
         })
     })
@@ -39,10 +57,7 @@ describe('Get Property', function() {
     })
 
     function getProperty(input, params, cb) {
-        if (arguments.length === 1) return getProperty(undefined, undefined, arguments[0])
-        if (arguments.length === 2) return getProperty(undefined, arguments[0], arguments[1])
-        flow.run.fn({
-            input: input || {},
+        flow.run.fn(input, {
             params: {
                 task: selectors.getProperty,
                 params: params

@@ -4,7 +4,7 @@ var flow = require('../../../lib/tasks/flow')
 describe('Sequence', function() {
 
     it('should require tasks', function(done) {
-        sequence(function(err) {
+        sequence(undefined, {}, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "tasks" fails because ["tasks" is required]]')
             done()
@@ -12,7 +12,7 @@ describe('Sequence', function() {
     })
 
     it('should require iterative tasks', function(done) {
-        sequence({ tasks: 1 }, function(err) {
+        sequence(undefined, { tasks: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "tasks" fails because ["tasks" must be an array, "tasks" must be an object]]')
             done()
@@ -21,18 +21,18 @@ describe('Sequence', function() {
 
     it('should execute an array of tasks sequentially', function(done) {
         var order = []
-        sequence({
+        sequence(undefined, {
             tasks: [
                 {
                     task: {
-                        fn: function one(ctx, cb) {
+                        fn: function one(input, ctx, cb) {
                             order.push(1)
                             cb()
                         }
                     }
                 }, {
                     task: {
-                        fn: function two(ctx, cb) {
+                        fn: function two(input, ctx, cb) {
                             order.push(2)
                             cb()
                         }
@@ -50,11 +50,11 @@ describe('Sequence', function() {
 
     it('should execute a map of tasks sequentially', function(done) {
         var order = []
-        sequence({
+        sequence(undefined, {
             tasks: {
                 a: {
                     task: {
-                        fn: function one(ctx, cb) {
+                        fn: function one(input, ctx, cb) {
                             order.push(1)
                             cb()
                         }
@@ -62,7 +62,7 @@ describe('Sequence', function() {
                 },
                 b: {
                     task: {
-                        fn: function two(ctx, cb) {
+                        fn: function two(input, ctx, cb) {
                             order.push(2)
                             cb()
                         }
@@ -82,14 +82,14 @@ describe('Sequence', function() {
             tasks: [
                 {
                     task: {
-                        fn: function one(ctx, cb) {
-                            cb(null, ctx.input + 1)
+                        fn: function one(input, ctx, cb) {
+                            cb(null, input + 1)
                         }
                     }
                 }, {
                     task: {
-                        fn: function two(ctx, cb) {
-                            cb(null, ctx.input + 1)
+                        fn: function two(input, ctx, cb) {
+                            cb(null, input + 1)
                         }
                     }
                 }
@@ -102,11 +102,11 @@ describe('Sequence', function() {
     })
 
     it('should yield errors', function(done) {
-        sequence({
+        sequence(undefined, {
             tasks: [
                 {
                     task: {
-                        fn: function(ctx, cb) {
+                        fn: function(input, ctx, cb) {
                             cb(new Error('nothing to see here'))
                         }
                     }
@@ -120,10 +120,7 @@ describe('Sequence', function() {
     })
 
     function sequence(input, params, cb) {
-        if (arguments.length === 1) return sequence(undefined, undefined, arguments[0])
-        if (arguments.length === 2) return sequence(undefined, arguments[0], arguments[1])
-        flow.run.fn({
-            input: input || {},
+        flow.run.fn(input, {
             params: {
                 task: flow.sequence,
                 params: params

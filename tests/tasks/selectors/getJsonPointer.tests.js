@@ -20,12 +20,16 @@ describe('Get JSON Pointer', function() {
         })
     })
 
-    it('should get the value specified by the path', function(done) {
-        getJsonPointer({ a: [
-            { b: 2 }
-        ]} , { path: '/a/0/b' }, function(err, result) {
+    it('should get a copy of the value specified by the path', function(done) {
+        var input = {
+            a: [
+                { b: 2 }
+            ]
+        }
+        getJsonPointer(input , { path: '/a/0' }, function(err, result) {
             assert.ifError(err)
-            assert.strictEqual(result, 2)
+            assert.deepEqual(result, { b: 2 })
+            assert.equal(result === input.a[0], false)
             done()
         })
     })
@@ -39,10 +43,7 @@ describe('Get JSON Pointer', function() {
     })
 
     function getJsonPointer(input, params, cb) {
-        if (arguments.length === 1) return getJsonPointer(undefined, undefined, arguments[0])
-        if (arguments.length === 2) return getJsonPointer(undefined, arguments[0], arguments[1])
-        flow.run.fn({
-            input: input || {},
+        flow.run.fn(input, {
             params: {
                 task: selectors.getJsonPointer,
                 params: params

@@ -21,10 +21,7 @@ describe('Set Property Pointer', function() {
     })
 
     function setProperty(input, params, cb) {
-        if (arguments.length === 1) return setProperty(undefined, undefined, arguments[0])
-        if (arguments.length === 2) return setProperty(undefined, arguments[0], arguments[1])
-        flow.run.fn({
-            input: input || {},
+        flow.run.fn(input, {
             params: {
                 task: mutators.setProperty,
                 params: params

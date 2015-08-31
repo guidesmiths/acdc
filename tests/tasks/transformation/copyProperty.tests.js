@@ -5,7 +5,7 @@ var transformation = require('../../../lib/tasks/transformation')
 describe('CopyProperty', function() {
 
     it('should require a from path', function(done) {
-        copyProperty({ from: 1 }, function(err) {
+        copyProperty({}, { from: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "from" fails because ["from" must be a string]]')
             done()
@@ -13,7 +13,7 @@ describe('CopyProperty', function() {
     })
 
     it('should require a to parameter', function(done) {
-        copyProperty({ from: 'a.b.c', to: 1 }, function(err) {
+        copyProperty({}, { from: 'a.b.c', to: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "to" fails because ["to" must be a string]]')
             done()
@@ -29,10 +29,7 @@ describe('CopyProperty', function() {
     })
 
     function copyProperty(input, params, cb) {
-        if (arguments.length === 1) return copyProperty(undefined, undefined, arguments[0])
-        if (arguments.length === 2) return copyProperty(undefined, arguments[0], arguments[1])
-        flow.run.fn({
-            input: input || {},
+        flow.run.fn(input, {
             params: {
                 task: transformation.copyProperty,
                 params: params

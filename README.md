@@ -17,24 +17,25 @@ with (R.mergeAll([flow, selectors, mutators, transformation, dsl])) {
     alias('get', getProperty)
     alias('set', setProperty)
     alias('copy', copyProperty)
+    alias('transform', transformProperty)
 
-    transform(
+    acdc(
         { a: 'x', b: 'y' },
         sequence([
             fork({
                 a: get('a'),
                 b: get('b')
             }),
-            task(function slash(ctx, cb) {
-                cb(null, ctx.input.a + '/' + ctx.input.b)
-            }),
-            task(function uc(ctx, cb) {
-                cb(null, ctx.input.toUpperCase())
+            task(function slash(input, ctx, cb) {
+                cb(null, input.a + '/' + input.b)
             }),
             set('z'),
-            copy('z', 'z2')
+            copy('z', 'z2'),
+            transform('z2', uppercase(), 'Z2')
         ]), function(err, result) {
-            assert.equal(result.z2, 'X/Y')
+            assert.ifError(err)
+            assert.equal(result.Z2, 'X/Y')
+            done()
         }
     )
 }

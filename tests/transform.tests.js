@@ -15,7 +15,7 @@ describe('AC/DC', function() {
         var executed = false
         acdc({
             task: {
-                fn: function dummy(ctx, cb) {
+                fn: function dummy(input, ctx, cb) {
                     executed = true
                     cb()
                 }
@@ -30,7 +30,7 @@ describe('AC/DC', function() {
     it('should yield a result', function(done) {
         acdc({
             task: {
-                fn: function dummy(ctx, cb) {
+                fn: function dummy(input, ctx, cb) {
                     cb(null, 123)
                 }
             }
@@ -44,7 +44,7 @@ describe('AC/DC', function() {
     it('should yield errors', function(done) {
         acdc({
             task: {
-                fn: function dummy(ctx, cb) {
+                fn: function dummy(input, ctx, cb) {
                     cb(new Error('nothing to see here'))
                 }
             }
@@ -60,7 +60,7 @@ describe('AC/DC', function() {
     it('shoud yield thrown errors', function(done) {
         acdc({
             task: {
-                fn: function dummy(ctx, cb) {
+                fn: function dummy(input, ctx, cb) {
                     throw new Error('nothing to see here')
                 }
             }
@@ -74,7 +74,7 @@ describe('AC/DC', function() {
     it('shoud yield thrown errors in async code', function(done) {
         acdc({
             task: {
-                fn: function dummy(ctx, cb) {
+                fn: function dummy(input, ctx, cb) {
                     setImmediate(function() {
                         throw new Error('nothing to see here')
                     })
@@ -90,7 +90,7 @@ describe('AC/DC', function() {
     it('shoud yield errors thrown from synchronous code wrapped by async', function(done) {
         acdc({
             task: {
-                fn: function dummy(ctx, cb) {
+                fn: function dummy(input, ctx, cb) {
                     async.series([
                         function() {
                             throw new Error('nothing to see here')
@@ -133,8 +133,8 @@ describe('AC/DC', function() {
                         },
                         {
                             task: {
-                                fn: function slash(ctx, cb) {
-                                    cb(null, ctx.input.a + '/' + ctx.input.b)
+                                fn: function slash(input, ctx, cb) {
+                                    cb(null, input.a + '/' + input.b)
                                 }
                             }
                         }
@@ -163,8 +163,8 @@ describe('AC/DC', function() {
                         a: get('a'),
                         b: get('b')
                     }),
-                    task(function slash(ctx, cb) {
-                        cb(null, ctx.input.a + '/' + ctx.input.b)
+                    task(function slash(input, ctx, cb) {
+                        cb(null, input.a + '/' + input.b)
                     }),
                     set('z'),
                     copy('z', 'z2'),

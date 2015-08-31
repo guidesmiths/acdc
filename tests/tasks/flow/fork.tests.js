@@ -4,7 +4,7 @@ var flow = require('../../../lib/tasks/flow')
 describe('Fork', function() {
 
     it('should require tasks', function(done) {
-        fork(function(err) {
+        fork(undefined, undefined, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "tasks" fails because ["tasks" is required]]')
             done()
@@ -12,7 +12,7 @@ describe('Fork', function() {
     })
 
     it('should require iterable tasks', function(done) {
-        fork({ tasks: 1 }, function(err) {
+        fork(undefined, { tasks: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "tasks" fails because ["tasks" must be an array, "tasks" must be an object]]')
             done()
@@ -21,11 +21,11 @@ describe('Fork', function() {
 
     it('should execute an array tasks in parallel', function(done) {
         var order = []
-        fork({
+        fork(undefined, {
             tasks: [
                 {
                     task: {
-                        fn: function one(ctx, cb) {
+                        fn: function one(input, ctx, cb) {
                             setImmediate(function() {
                                 order.push(1)
                                 cb()
@@ -35,7 +35,7 @@ describe('Fork', function() {
                 },
                 {
                     task: {
-                        fn: function two(ctx, cb) {
+                        fn: function two(input, ctx, cb) {
                             order.push(2)
                             cb()
                         }
@@ -53,11 +53,11 @@ describe('Fork', function() {
 
     it('should execute a map tasks in parallel', function(done) {
         var order = []
-        fork({
+        fork(undefined, {
             tasks: {
                 a: {
                     task: {
-                        fn: function one(ctx, cb) {
+                        fn: function one(input, ctx, cb) {
                             setImmediate(function() {
                                 order.push(1)
                                 cb()
@@ -67,7 +67,7 @@ describe('Fork', function() {
                 },
                 b: {
                     task: {
-                        fn: function two(ctx, cb) {
+                        fn: function two(input, ctx, cb) {
                             order.push(2)
                             cb()
                         }
@@ -88,15 +88,15 @@ describe('Fork', function() {
             tasks: {
                 a: {
                     task: {
-                        fn: function a(ctx, cb) {
-                            cb(null, ctx.input + 1)
+                        fn: function a(input, ctx, cb) {
+                            cb(null, input + 1)
                         }
                     }
                 },
                 b: {
                     task: {
-                        fn: function b(ctx, cb) {
-                            cb(null, ctx.input + 2)
+                        fn: function b(input, ctx, cb) {
+                            cb(null, input + 2)
                         }
                     }
                 }
@@ -110,11 +110,11 @@ describe('Fork', function() {
     })
 
     it('should yield errors', function(done) {
-        fork({
+        fork(undefined, {
             tasks: [
                 {
                     task: {
-                        fn: function(ctx, cb) {
+                        fn: function(input, ctx, cb) {
                             cb(new Error('nothing to see here'))
                         }
                     }
@@ -128,10 +128,7 @@ describe('Fork', function() {
     })
 
     function fork(input, params, cb) {
-        if (arguments.length === 1) return fork(undefined, undefined, arguments[0])
-        if (arguments.length === 2) return fork(undefined, arguments[0], arguments[1])
-        flow.run.fn({
-            input: input || {},
+        flow.run.fn(input, {
             params: {
                 task: flow.fork,
                 params: params
