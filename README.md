@@ -11,15 +11,10 @@ var mutators = require('../lib/tasks/mutators')
 var transformation = require('../lib/tasks/transformation')
 var dsl = require('../lib/dsl')
 
-acdc()
-    .bind(flow)
+acdc().bind(flow)
     .bind(dsl.task)
-    .bind(selectors.getProperty).alias('get')
-    .bind(mutators.setProperty).alias('set')
-    .bind(transformation.copyProperty).alias('copy')
-    .bind(transformation.map).alias('map')
-    .bind(transformation.transformProperty).alias('transform')
-    .bind(transformation.uppercase).alias('uppercase')
+    .bind(property)
+    .bind(string)
     .transform({ a: 'x', b: 'y' })
     .using(function(dsl, cb) {
         with (dsl) {

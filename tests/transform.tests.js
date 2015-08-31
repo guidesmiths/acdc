@@ -1,8 +1,8 @@
 var assert = require('assert')
 var acdc = require('..')
 var flow = require('../lib/tasks/flow')
-var selectors = require('../lib/tasks/selectors')
-var mutators = require('../lib/tasks/mutators')
+var property = require('../lib/tasks/property')
+var string = require('../lib/tasks/string')
 var transformation = require('../lib/tasks/transformation')
 var dsl = require('../lib/dsl')
 var async = require('async')
@@ -125,13 +125,13 @@ describe('AC/DC', function() {
                             params: {
                                 tasks: {
                                     a: {
-                                        task: selectors.getProperty,
+                                        task: property.get,
                                         params: {
                                             path: 'a'
                                         }
                                     },
                                     b: {
-                                        task: selectors.getProperty,
+                                        task: property.get,
                                         params: {
                                             path: 'b'
                                         }
@@ -159,12 +159,8 @@ describe('AC/DC', function() {
     it('should support shorthand syntax', function(done) {
         acdc().bind(flow)
             .bind(dsl.task)
-            .bind(selectors.getProperty).alias('get')
-            .bind(mutators.setProperty).alias('set')
-            .bind(transformation.copyProperty).alias('copy')
-            .bind(transformation.map)
-            .bind(transformation.transformProperty).alias('transform')
-            .bind(transformation.uppercase)
+            .bind(property)
+            .bind(string)
             .transform({ a: 'x', b: 'y' })
             .using(function(dsl, cb) {
                 with (dsl) {
