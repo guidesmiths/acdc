@@ -12,7 +12,7 @@ describe('AC/DC', function() {
 
     it('should execute a task', function(done) {
         var executed = false
-        acdc().transform().using(function(dsl, cb) {
+        acdc().run(function(dsl, cb) {
             cb({
                 task: {
                     fn: function dummy(input, ctx, cb) {
@@ -29,7 +29,7 @@ describe('AC/DC', function() {
     })
 
     it('should yield a result', function(done) {
-        acdc().transform().using(function(dsl, cb) {
+        acdc().run(function(dsl, cb) {
             cb({
                 task: {
                     fn: function dummy(input, ctx, cb) {
@@ -45,7 +45,7 @@ describe('AC/DC', function() {
     })
 
     it('should yield errors', function(done) {
-        acdc().transform().using(function(dsl, cb) {
+        acdc().run(function(dsl, cb) {
             cb({
                 task: {
                     fn: function dummy(input, ctx, cb) {
@@ -61,7 +61,7 @@ describe('AC/DC', function() {
     })
 
     it('shoud yield thrown errors', function(done) {
-        acdc().transform().using(function(dsl, cb) {
+        acdc().run(function(dsl, cb) {
             cb({
                 task: {
                     fn: function dummy(input, ctx, cb) {
@@ -77,7 +77,7 @@ describe('AC/DC', function() {
     })
 
     it('shoud yield thrown errors in async code', function(done) {
-        acdc().transform().using(function(dsl, cb) {
+        acdc().run(function(dsl, cb) {
             cb({
                 task: {
                     fn: function dummy(input, ctx, cb) {
@@ -95,7 +95,7 @@ describe('AC/DC', function() {
     })
 
     it('shoud yield errors thrown from synchronous code wrapped by async', function(done) {
-        acdc().transform().using(function(dsl, cb) {
+        acdc().run(function(dsl, cb) {
             cb({
                 task: {
                     fn: function dummy(input, ctx, cb) {
@@ -115,11 +115,17 @@ describe('AC/DC', function() {
     })
 
     it('should support complex conversion flows', function(done) {
-        acdc().transform({ a: 'x', b: 'y' }).using(function(dsl, cb) {
+        acdc().run(function(dsl, cb) {
             cb({
                 task: flow.sequence,
                 params: {
                     tasks: [
+                        {
+                            task: flow.input,
+                            params: {
+                                value: { a: 'x', b: 'y' }
+                            }
+                        },
                         {
                             task: flow.fork,
                             params: {
@@ -161,10 +167,10 @@ describe('AC/DC', function() {
             .bind(dsl.task)
             .bind(property)
             .bind(string)
-            .transform({ a: 'x', b: 'y' })
-            .using(function(dsl, cb) {
+            .run(function(dsl, cb) {
                 with (dsl) {
                     cb(sequence([
+                        input({ a: 'x', b: 'y' }),
                         fork({
                             a: get('a'),
                             b: get('b')

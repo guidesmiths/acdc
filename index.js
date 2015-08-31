@@ -16,7 +16,7 @@ module.exports = function acdc() {
 
     return {
         bind: _bind,
-        transform: _transform
+        run: _run
     }
 
     function _bind(subject) {
@@ -30,7 +30,7 @@ module.exports = function acdc() {
         return {
             bind: name ? _bind : _bail.bind(null, 'You must alias anonymous functions'),
             alias: _alias.bind(null, subject),
-            transform: name ? _transform : _bail.bind(null, 'You must alias anonymous functions')
+            run: name ? _run : _bail.bind(null, 'You must alias anonymous functions')
         }
     }
 
@@ -41,7 +41,7 @@ module.exports = function acdc() {
 
         return {
             bind: _bind,
-            transform: _transform
+            run: _run
         }
     }
 
@@ -62,7 +62,7 @@ module.exports = function acdc() {
         return {
             bind: _bind,
             alias: _alias.bind(null, subject),
-            transform: _transform
+            run: _run
         }
     }
 
@@ -70,14 +70,7 @@ module.exports = function acdc() {
         throw new Error(message)
     }
 
-    function _transform(_input) {
-        input = _input
-        return {
-            using: _using
-        }
-    }
-
-    function _using(cb) {
+    function _run(cb) {
         cb(dsl, function(_task) {
             task = _task
         })
