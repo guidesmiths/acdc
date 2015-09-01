@@ -3,7 +3,7 @@ var R = require('ramda')
 var flow = require('./lib/tasks/flow')
 var format = require('util').format
 
-module.exports = function acdc() {
+module.exports = function acdc(runner) {
 
     var dsl = {}
     var input
@@ -41,7 +41,7 @@ module.exports = function acdc() {
 
         return {
             bind: _bind,
-            run: _run
+            run: _run,
         }
     }
 
@@ -80,7 +80,7 @@ module.exports = function acdc() {
     }
 
     function _done(cb) {
-        flow.domain.fn(input, { params: task }, function(err, result) {
+        (runner || flow.domain).fn(input, { params: task }, function(err, result) {
             cb(err, result)
         })
     }
