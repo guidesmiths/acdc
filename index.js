@@ -6,81 +6,80 @@ var format = require('util').format
 module.exports = function acdc(runner) {
 
     var dsl = {}
-    var input
     var task
-    var _bindMethods = {
-        'function': _bindFunction,
-        'object': _bindObject,
-        'invalid': _bindInvalid
+    var binders = {
+        'function': bindFunction,
+        'object': bindObject,
+        'invalid': bindInvalid
     }
 
     return {
-        bind: _bind,
-        run: _run
+        bind: bind,
+        run: run
     }
 
-    function _bind(subject) {
-        return (_bindMethods[typeof subject] || _bindMethods.invalid)(subject)
+    function bind(subject) {
+        return (binders[typeof subject] || binders.invalid)(subject)
     }
 
-    function _bindFunction(subject) {
+    function bindFunction(subject) {
         var name = subject.name || subject.fn && subject.fn.name
-        if (name) _bindProperty(name, subject)
+        if (name) bindProperty(name, subject)
 
         return {
-            bind: name ? _bind : _bail.bind(null, 'You must alias anonymous functions'),
-            alias: _alias.bind(null, subject),
-            run: name ? _run : _bail.bind(null, 'You must alias anonymous functions')
+            bind: name ? bind : R.curry(bail, 'You must alias anonymous functions'),
+            alias: alias.bind(null, subject),
+            run: name ? run : R.curry(bail, 'You must alias anonymous functions')
         }
     }
 
-    function _bindObject(subject) {
+    function bindObject(subject) {
         R.keys(subject).forEach(function(name) {
-            _bindProperty(name, subject[name])
+            bindProperty(name, subject[name])
         })
 
         return {
-            bind: _bind,
-            run: _run,
+            bind: bind,
+            run: run
         }
     }
 
-    function _bindInvalid(subject) {
-        _bail(format('Cannot bind %s', typeof subject))
+    function bindInvalid(subject) {
+        bail(format('Cannot bind %s', typeof subject))
     }
 
-    function _bindProperty(name, value) {
+    function bindProperty(name, value) {
         debug('Binding %s', name)
-        if (dsl[name]) _bail(format('%s has already been bound', name))
+        if (dsl[name]) bail(format('%s has already been bound', name))
         dsl[name] = value
     }
 
-    function _alias(subject, alias) {
+    function alias(subject, alias) {
         debug('Aliasing %s', alias)
-        _bindProperty(alias, subject)
+        bindProperty(alias, subject)
 
         return {
-            bind: _bind,
-            alias: _alias.bind(null, subject),
-            run: _run
+            bind: bind,
+            alias: R.curry(alias, subject),
+            run: run
         }
     }
 
-    function _bail(message) {
+    function bail(message) {
         throw new Error(message)
     }
 
-    function _run(cb) {
+    function run(cb) {
         cb(dsl, function(_task) {
             task = _task
         })
         return {
-            done: _done
+            done: done
         }
     }
 
-    function _done(cb) {
-        (runner || flow.domain).fn(input, { params: task }, function(err, result) {
+    function done(cb) {
+        (runner || flow.domain).fn(undefined, { params: task }, function(err, result) {
             cb(err, result)
         })
     }
