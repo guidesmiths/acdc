@@ -21,9 +21,9 @@ acdc()
                 fork({
                     a: copy('a[0]', 'x'),                                   // Yields { x: 1 }
                     b: copy('b[1]', 'y')                                    // Yields { y: 'cat' }
-                }),
+                }),                                                         // Yields { x: 1, y: 'cat' }
                 task(function slash(input, ctx, cb) {
-                    cb(null, input.a + '/' + input.b)                       // Yields '1/cat'
+                    cb(null, input.x + '/' + input.y)                       // Yields '1/cat'
                 }),
                 choose([
                     when(eq('2/dog'), input('oh no!')),
