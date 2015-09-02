@@ -3,6 +3,7 @@ var acdc = require('..')
 var flow = require('../lib/tasks/flow')
 var property = require('../lib/tasks/property')
 var string = require('../lib/tasks/string')
+var logic = require('../lib/tasks/logic')
 var transformation = require('../lib/tasks/transformation')
 var dsl = require('../lib/dsl')
 var async = require('async')
@@ -119,22 +120,66 @@ describe('AC/DC', function() {
                                             cb(null, input.a + '/' + input.b)
                                         }
                                     }
+                                },
+                                {
+                                    task: logic.choose,
+                                    params: {
+                                        options: [
+                                            {
+                                                task: logic.when,
+                                                params: {
+                                                    condition: {
+                                                        task: logic.eq,
+                                                        params: {
+                                                            value: 'does not match'
+                                                        }
+                                                    },
+                                                    task: {
+                                                        task: {
+                                                            fn: function err(input, ctx, cb) {
+                                                                cb(new Error('wrong condition'))
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                task: logic.when,
+                                                params: {
+                                                    condition: {
+                                                        task: logic.eq,
+                                                        params: {
+                                                            value: 'x/y'
+                                                        }
+                                                    },
+                                                    task: {
+                                                        task: {
+                                                            fn: function err(input, ctx, cb) {
+                                                                cb(null, 'oh yeah!')
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
                                 }
                             ]
                         }
                     })
                 }).done(function(err, result) {
                     assert.ifError(err)
-                    assert.equal(result, 'x/y')
+                    assert.equal(result, 'oh yeah!')
                     done()
                 })
             })
 
-            it('should support shorthand syntax', function(done) {
+            it.only('should support shorthand syntax', function(done) {
                 acdc(runner).bind(flow)
-                    .bind(dsl.task)
+                    .bind(dsl)
                     .bind(property)
                     .bind(string)
+                    .bind(logic)
                     .run(function(dsl, cb) {
                         with (dsl) {
                             cb(sequence([
@@ -146,6 +191,10 @@ describe('AC/DC', function() {
                                 task(function slash(input, ctx, cb) {
                                     cb(null, input.a + '/' + input.b)
                                 }),
+                                choose([
+                                    when(eq('y/x'), input('oh no!')),
+                                    when(eq('x/y'), input('oh yeah!'))
+                                ]),
                                 set('z'),
                                 copy('z', 'z2'),
                                 transform('z2', uppercase(), 'Z2')
@@ -154,7 +203,7 @@ describe('AC/DC', function() {
                     })
                     .done(function(err, result) {
                         assert.ifError(err)
-                        assert.equal(result.Z2, 'X/Y')
+                        assert.equal(result.Z2, 'OH YEAH!')
 
                         assert.equal(typeof sequence, 'undefined')
                         assert.equal(typeof fork, 'undefined')
