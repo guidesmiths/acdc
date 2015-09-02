@@ -8,7 +8,7 @@ var tasks = require('acdc/lib/tasks')
 var dsl = require('acdc/lib/dsl')
 
 
-acdc(runner)
+acdc()
     .bind(tasks.flow)
     .bind(tasks.dsl)
     .bind(tasks.property)
