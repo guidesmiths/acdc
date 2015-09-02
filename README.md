@@ -17,25 +17,25 @@ acdc()
     .run(function(dsl, cb) {
         with (dsl) {
             cb(sequence([
-                input({ a: 'x', b: 'y' }),
+                input({ a: [1, 2], b: [ 'dog', 'cat' ] }),                  // Yields { a: [1, 2], b: [ 'dog', 'cat' ] }
                 fork({
-                    a: get('a'),
-                    b: get('b')
+                    a: copy('a[0]', 'x'),                                   // Yields { x: 1 }
+                    b: copy('b[1]', 'y')                                    // Yields { y: 'cat' }
                 }),
                 task(function slash(input, ctx, cb) {
-                    cb(null, input.a + '/' + input.b)
+                    cb(null, input.a + '/' + input.b)                       // Yields '1/cat'
                 }),
                 choose([
-                    when(eq('y/x'), input('oh no!')),
-                    when(eq('x/y'), input('oh yeah!'))
-                ]),
-                set('z'),
-                copy('z', 'z2'),
-                transform('z2', uppercase(), 'Z2')
+                    when(eq('2/dog'), input('oh no!')),
+                    when(eq('1/cat'), input('oh yeah!'))
+                ]),                                                         // Yields 'oh yeah!'
+                set('answer'),                                              // Yields { answer: 'oh yeah!' }
+                transform('answer', uppercase(), 'uc_answer')               // Yields { uc_answer: 'OH YEAH!' }
+                get('uc_answer')                                            // Yields 'OH YEAH!'
             ]))
         }
     })
     .done(function(err, result) {
-        assert.equal(result.Z2, 'OH YEAH!')
+        assert.equal(result, 'OH YEAH!')
     })
 ```
