@@ -4,34 +4,38 @@ JavaScript object transformation
 
 ```js
 var assert = require('assert')
-var transform = require('acdc')
-var flow = require('../lib/tasks/flow')
-var properties = require('../lib/tasks/properties')
-var string = require('../lib/tasks/string')
-var dsl = require('../lib/dsl')
+var tasks = require('acdc/lib/tasks')
+var dsl = require('acdc/lib/dsl')
 
-acdc().bind(flow)
-    .bind(dsl.task)
-    .bind(property)
-    .bind(string)
+
+acdc(runner)
+    .bind(tasks.flow)
+    .bind(tasks.dsl)
+    .bind(tasks.property)
+    .bind(tasks.string)
+    .bind(tasks.logic)
     .run(function(dsl, cb) {
-        with(dsl) {
+        with (dsl) {
             cb(sequence([
-                input({ a: ['x'], b: ['y'] }),          // yields { a: ['x'], b: ['y'] }
+                input({ a: 'x', b: 'y' }),
                 fork({
-                    a: get('a[0]'),                     // yields 'x'
-                    b: get('b[0]')                      // yields 'y'
-                }),                                     // yields { a: 'x', b: 'y' }
+                    a: get('a'),
+                    b: get('b')
+                }),
                 task(function slash(input, ctx, cb) {
                     cb(null, input.a + '/' + input.b)
-                }),                                     // yields 'x/y'
-                set('z'),                               // yields { z: 'x/y' }
-                copy('z', 'z2'),                        // yields { z2: 'x/y' }
-                transform('z2', uppercase(), 'Z2')      // yields { Z2: 'X/Y' }
+                }),
+                choose([
+                    when(eq('y/x'), input('oh no!')),
+                    when(eq('x/y'), input('oh yeah!'))
+                ]),
+                set('z'),
+                copy('z', 'z2'),
+                transform('z2', uppercase(), 'Z2')
             ]))
         }
     })
     .done(function(err, result) {
-        assert.equal(result.Z2, 'X/Y')
+        assert.equal(result.Z2, 'OH YEAH!')
     })
 ```

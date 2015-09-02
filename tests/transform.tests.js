@@ -174,8 +174,9 @@ describe('AC/DC', function() {
                 })
             })
 
-            it.only('should support shorthand syntax', function(done) {
-                acdc(runner).bind(flow)
+            it('should support shorthand syntax', function(done) {
+                acdc(runner)
+                    .bind(flow)
                     .bind(dsl)
                     .bind(property)
                     .bind(string)
