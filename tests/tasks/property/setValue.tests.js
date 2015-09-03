@@ -2,10 +2,10 @@ var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
 var property = require('../../../lib/tasks/property')
 
-describe('Property Literal', function() {
+describe('Property Set Value', function() {
 
     it('should require a value parameter', function(done) {
-        literal(undefined, {}, function(err) {
+        setValue(undefined, {}, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "value" fails because ["value" is required]]')
             done()
@@ -13,7 +13,7 @@ describe('Property Literal', function() {
     })
 
     it('should require a to path', function(done) {
-        literal(undefined, { value: 3, to: 1 }, function(err) {
+        setValue(undefined, { value: 3, to: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "to" fails because ["to" must be a string]]')
             done()
@@ -21,17 +21,17 @@ describe('Property Literal', function() {
     })
 
     it('should set the value to the destination path', function(done) {
-        literal(undefined, { value: 3, to: 'x.y' }, function(err, result) {
+        setValue(undefined, { value: 3, to: 'x.y' }, function(err, result) {
             assert.ifError(err)
             assert.strictEqual(result.x.y, 3)
             done()
         })
     })
 
-    function literal(input, params, cb) {
+    function setValue(input, params, cb) {
         flow.run.fn(input, {
             params: {
-                task: property.literal,
+                task: property.setValue,
                 params: params
             }
         }, cb)
