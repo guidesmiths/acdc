@@ -17,7 +17,7 @@ acdc()
     .run(function(dsl, cb) {
         with (dsl) {
             cb(sequence([
-                yield({ a: [1, 2], b: [ 'dog', 'cat' ] }),       // Yields { a: [1, 2], b: [ 'dog', 'cat' ] }
+                output({ a: [1, 2], b: [ 'dog', 'cat' ] }),      // Yields { a: [1, 2], b: [ 'dog', 'cat' ] }
                 fork({
                     a: copy('a[0]', 'x'),                        // Yields { x: 1 }
                     b: copy('b[1]', 'y')                         // Yields { y: 'cat' }
@@ -26,8 +26,8 @@ acdc()
                     cb(null, input.x + '/' + input.y)            // Yields '1/cat'
                 }),
                 choose([
-                    when(eq('2/dog'), yield('oh no!')),
-                    when(eq('1/cat'), yield('oh yeah!'))
+                    when(eq('2/dog'), output('oh no!')),
+                    when(eq('1/cat'), output('oh yeah!'))
                 ]),                                              // Yields 'oh yeah!'
                 set('answer'),                                   // Yields { answer: 'oh yeah!' }
                 transform('answer', uppercase(), 'uc_answer')    // Yields { uc_answer: 'OH YEAH!' }

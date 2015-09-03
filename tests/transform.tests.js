@@ -90,7 +90,7 @@ describe('AC/DC', function() {
                         params: {
                             tasks: [
                                 {
-                                    task: flow.yield,
+                                    task: flow.output,
                                     params: {
                                         value: { a: 'x', b: 'y' }
                                     }
@@ -184,7 +184,7 @@ describe('AC/DC', function() {
                     .run(function(dsl, cb) {
                         with (dsl) {
                             cb(sequence([
-                                yield({ a: 'x', b: 'y' }),
+                                output({ a: 'x', b: 'y' }),
                                 fork({
                                     a: get('a'),
                                     b: get('b')
@@ -193,8 +193,8 @@ describe('AC/DC', function() {
                                     cb(null, input.a + '/' + input.b)
                                 }),
                                 choose([
-                                    when(eq('y/x'), yield('oh no!')),
-                                    when(eq('x/y'), yield('oh yeah!'))
+                                    when(eq('y/x'), output('oh no!')),
+                                    when(eq('x/y'), output('oh yeah!'))
                                 ]),
                                 set('z'),
                                 copy('z', 'z2'),
