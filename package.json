@@ -11,6 +11,7 @@
     "joi": "^6.6.1",
     "json-pointer": "^0.3.0",
     "json-stringify-safe": "^5.0.1",
+    "lodash": "^3.10.1",
     "merge-defaults": "^0.2.1",
     "moment": "^2.10.6",
     "ramda": "^0.17.1",
@@ -20,7 +21,6 @@
     "mocha": "^2.2.5",
     "husky": "^0.9.3",
     "json-pointer": "^0.3.0",
-    "lodash": "^3.10.1",
     "eslint": "^0.23.0",
     "eslint-config-imperative": "^0.0.6",
     "eslint-plugin-imperative": "^0.0.2"
