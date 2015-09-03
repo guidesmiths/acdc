@@ -24,6 +24,16 @@ describe('merge', function() {
         })
     })
 
+    it('should deep merge', function(done) {
+        merge([{ a: { b: 1, c: 3} }, { a: { b: 'x', d: 4 } }], {}, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.a.b, 'x')
+            assert.equal(result.a.c, 3)
+            assert.equal(result.a.d, 4)
+            done()
+        })
+    })
+
     function merge(input, params, cb) {
         flow.run.fn(input, {
             params: {
