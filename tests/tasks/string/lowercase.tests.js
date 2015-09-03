@@ -2,7 +2,7 @@ var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
 var string = require('../../../lib/tasks/string')
 
-describe('lowercase Parse', function() {
+describe('lowercase', function() {
 
     it('should require input to be a string', function(done) {
         parse(1, {}, function(err) {

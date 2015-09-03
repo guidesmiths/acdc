@@ -2,7 +2,7 @@ var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
 var string = require('../../../lib/tasks/string')
 
-describe('uppercase Parse', function() {
+describe('uppercase', function() {
 
     it('should require input to be a string', function(done) {
         parse(1, {}, function(err) {
