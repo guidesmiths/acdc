@@ -2,7 +2,7 @@ var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
 var property = require('../../../lib/tasks/property')
 
-describe.only('Property Transform When', function() {
+describe('Property Transform When', function() {
 
     it('should require condition param to be a task', function(done) {
         transformWhen(undefined, { condition: {} }, function(err) {

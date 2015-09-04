@@ -2,10 +2,10 @@ var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
 var logic = require('../../../lib/tasks/logic')
 
-describe('When', function() {
+describe('Unless', function() {
 
     it('should require condition param to be a task', function(done) {
-        when(undefined, { condition: {} }, function(err) {
+        unless(undefined, { condition: {} }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "condition" fails because [child "task" fails because ["task" is required]]]')
             done()
@@ -13,19 +13,19 @@ describe('When', function() {
     })
 
     it('should require task param to be a task', function(done) {
-        when(undefined, { condition: { task: { fn: function() {} } }, task: {} }, function(err) {
+        unless(undefined, { condition: { task: { fn: function() {} } }, task: {} }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "task" fails because [child "task" fails because ["task" is required]]]')
             done()
         })
     })
 
-    it('should run the task when the condition is truthy', function(done) {
-        when(undefined, {
+    it('should run the task unless the condition is truthy', function(done) {
+        unless(undefined, {
             condition: {
                 task: {
                     fn: function condition(input, ctx, cb) {
-                        cb(null, 'ok')
+                        cb(null, 0)
                     }
                 }
             },
@@ -44,12 +44,12 @@ describe('When', function() {
         })
     })
 
-    it('should not run the task when condition is falsey', function(done) {
-        when(undefined, {
+    it('should not run the task unless condition is falsey', function(done) {
+        unless(undefined, {
             condition: {
                 task: {
                     fn: function condition(input, ctx, cb) {
-                        cb(null, 0)
+                        cb(null, 'ok')
                     }
                 }
             },
@@ -68,10 +68,10 @@ describe('When', function() {
         })
     })
 
-    function when(input, params, cb) {
+    function unless(input, params, cb) {
         flow.run.fn(input, {
             params: {
-                task: logic.when,
+                task: logic.unless,
                 params: params
             }
         }, cb)
