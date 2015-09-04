@@ -1,6 +1,6 @@
 var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
-var transformation = require('../../../lib/tasks/transformation')
+var collection = require('../../../lib/tasks/collection')
 
 describe('Map', function() {
 
@@ -69,7 +69,7 @@ describe('Map', function() {
     function map(input, params, cb) {
         flow.run.fn(input, {
             params: {
-                task: transformation.map,
+                task: collection.map,
                 params: params
             }
         }, cb)

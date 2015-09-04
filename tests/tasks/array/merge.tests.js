@@ -1,6 +1,6 @@
 var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
-var transformation = require('../../../lib/tasks/transformation')
+var array = require('../../../lib/tasks/array')
 
 describe('merge', function() {
 
@@ -37,7 +37,7 @@ describe('merge', function() {
     function merge(input, params, cb) {
         flow.run.fn(input, {
             params: {
-                task: transformation.merge,
+                task: array.merge,
                 params: params
             }
         }, cb)
