@@ -28,6 +28,14 @@ describe('Property Copy', function() {
         })
     })
 
+    it('should copy the whole document when the source path is empty', function(done) {
+        copy({ a: { b: 2 } }, { from: '', to: 'x.y' }, function(err, result) {
+            assert.ifError(err)
+            assert.strictEqual(result.x.y.a.b, 2)
+            done()
+        })
+    })
+
     function copy(input, params, cb) {
         flow.run.fn(input, {
             params: {
