@@ -1,12 +1,13 @@
 # AC/DC
 
-JavaScript object transformation
+AC/DC is a library for transforming one JavaScript object into another. We wrote it because we needed to transform a complex, legacy feed into a simpler one, in such a way that the poor soul who had to maintain it could do so without going insane.
+
+## tl;dr
 
 ```js
 var assert = require('assert')
 var tasks = require('acdc/lib/tasks')
 var dsl = require('acdc/lib/dsl')
-
 
 acdc()
     .bind(tasks.flow)
@@ -39,3 +40,7 @@ acdc()
         assert.equal(result, 'OH YEAH!')
     })
 ```
+
+## Concepts
+
+

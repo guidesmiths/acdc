@@ -28,7 +28,7 @@ module.exports = function acdc(runner) {
 
         return {
             bind: name ? bind : R.curry(bail, 'You must alias anonymous functions'),
-            alias: alias.bind(null, subject),
+            alias: aliasFunction.bind(null, subject),
             run: name ? run : R.curry(bail, 'You must alias anonymous functions')
         }
     }
@@ -40,6 +40,7 @@ module.exports = function acdc(runner) {
 
         return {
             bind: bind,
+            alias: aliasObject.bind(null, subject),
             run: run
         }
     }
@@ -54,13 +55,27 @@ module.exports = function acdc(runner) {
         dsl[name] = value
     }
 
-    function alias(subject, alias) {
+    function aliasFunction(subject, alias) {
         debug('Aliasing %s', alias)
         bindProperty(alias, subject)
 
         return {
             bind: bind,
             alias: R.curry(alias, subject),
+            run: run
+        }
+    }
+
+    function aliasObject(subject, aliases) {
+        debug('Aliasing %s', aliases)
+
+        R.keys(aliases).forEach(function(alias) {
+            bindProperty(alias, subject[aliases[alias]])
+        })
+
+        return {
+            bind: bind,
+            alias: R.curry(aliasObject, subject),
             run: run
         }
     }

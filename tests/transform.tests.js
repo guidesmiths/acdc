@@ -177,14 +177,14 @@ describe('AC/DC', function() {
 
             it('should support shorthand syntax', function(done) {
                 acdc(runner)
-                    .bind(flow)
+                    .bind(flow).alias({ seq: 'sequence' })
                     .bind(dsl)
                     .bind(property)
                     .bind(string)
                     .bind(logic)
                     .run(function(dsl, cb) {
                         with (dsl) {
-                            cb(sequence([
+                            cb(seq([
                                 output({ a: 'x', b: 'y' }),
                                 fork({
                                     a: get('a'),
