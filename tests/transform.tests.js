@@ -231,6 +231,16 @@ describe('AC/DC', function() {
                     .done(done)
             })
 
+            it('should reject duplicate task function aliases', function(done) {
+                try {
+                    acdc(runner).bind(flow.sequence).alias('seq').alias('seq')
+                } catch(err) {
+                    assert.ok(err)
+                    assert.equal(err.message, 'seq has already been bound')
+                    done()
+                }
+            })
+
             it('should support aliased task objects', function(done) {
                 acdc(runner)
                     .bind(flow).alias({ seq: 'sequence' })
@@ -241,6 +251,17 @@ describe('AC/DC', function() {
                         }
                     })
                     .done(done)
+            })
+
+
+            it('should reject duplicate task objects aliases', function(done) {
+                try {
+                    acdc(runner).bind(flow).alias({ seq: 'sequence' }).alias({ seq: 'sequence' })
+                } catch(err) {
+                    assert.ok(err)
+                    assert.equal(err.message, 'seq has already been bound')
+                    done()
+                }
             })
 
             if (runner === flow.domain) {

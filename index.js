@@ -27,9 +27,9 @@ module.exports = function acdc(runner) {
         if (name) bindProperty(name, subject)
 
         return {
-            bind: name ? bind : R.curry(bail, 'You must alias anonymous functions'),
+            bind: name ? bind : bail.bind(null, 'You must alias anonymous functions'),
             alias: aliasFunction.bind(null, subject),
-            run: name ? run : R.curry(bail, 'You must alias anonymous functions')
+            run: name ? run : bail.bind(null, 'You must alias anonymous functions')
         }
     }
 
@@ -61,13 +61,13 @@ module.exports = function acdc(runner) {
 
         return {
             bind: bind,
-            alias: R.curry(alias, subject),
+            alias: aliasFunction.bind(null, subject),
             run: run
         }
     }
 
     function aliasObject(subject, aliases) {
-        debug('Aliasing %s', aliases)
+        debug('Aliasing %s', R.keys(aliases))
 
         R.keys(aliases).forEach(function(alias) {
             bindProperty(alias, subject[aliases[alias]])
@@ -75,7 +75,7 @@ module.exports = function acdc(runner) {
 
         return {
             bind: bind,
-            alias: R.curry(aliasObject, subject),
+            alias: aliasObject.bind(null, subject),
             run: run
         }
     }
