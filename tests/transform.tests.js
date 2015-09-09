@@ -219,6 +219,30 @@ describe('AC/DC', function() {
                     })
             })
 
+            it('should support aliased task functions', function(done) {
+                acdc(runner)
+                    .bind(flow.sequence).alias('seq')
+                    .run(function(dsl, cb) {
+                        with (dsl) {
+                            cb(seq([
+                            ]))
+                        }
+                    })
+                    .done(done)
+            })
+
+            it('should support aliased task objects', function(done) {
+                acdc(runner)
+                    .bind(flow).alias({ seq: 'sequence' })
+                    .run(function(dsl, cb) {
+                        with (dsl) {
+                            cb(seq([
+                            ]))
+                        }
+                    })
+                    .done(done)
+            })
+
             if (runner === flow.domain) {
                 it('shoud yield thrown errors', function(done) {
                     acdc(flow.domain).run(function(dsl, cb) {
