@@ -2,16 +2,15 @@
 
 AC/DC is a library for transforming one JavaScript object into another. We wrote it because we needed to transform a complex, legacy feed into a simpler one, in such a way that the poor soul who had to maintain it could do so without going insane.
 
-## tl;dr
+AC/DC works on the concept of flows of tasks. The output from one task becomes the input for the next. The first task in a flow is implicitly set by AC/DC and will wrap the remaining tasks in a domain. The first explicit task in a flow will usually be a 'sequence'. Subsequent tasks may change the input document, apply transformations to it, or further control the flow.
+
+AC/DC provides several out of the box tasks which can be 'bound' into the dsl for convenience. A simple flow would look like
 
 ```js
-var assert = require('assert')
 var tasks = require('acdc/lib/tasks')
-var dsl = require('acdc/lib/dsl')
 
 acdc()
     .bind(tasks.flow)
-    .bind(tasks.dsl)
     .bind(tasks.property)
     .bind(tasks.string)
     .bind(tasks.logic)
@@ -43,4 +42,5 @@ acdc()
 
 ## Concepts
 
+AC/DC works on the concept of flows of tasks. The output from one task becomes the input for the next. Tasks may control the flow (e.g. by forking the input to multiple subflows), select part of the input document
 

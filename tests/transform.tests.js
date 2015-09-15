@@ -253,7 +253,6 @@ describe('AC/DC', function() {
                     .done(done)
             })
 
-
             it('should reject duplicate task objects aliases', function(done) {
                 try {
                     acdc(runner).bind(flow).alias({ seq: 'sequence' }).alias({ seq: 'sequence' })
