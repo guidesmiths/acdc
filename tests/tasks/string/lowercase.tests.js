@@ -5,7 +5,7 @@ var string = require('../../../lib/tasks/string')
 describe('lowercase', function() {
 
     it('should require input to be a string', function(done) {
-        parse(1, {}, function(err) {
+        lowercase(1, {}, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "input" fails because ["input" must be a string]')
             done()
@@ -13,7 +13,7 @@ describe('lowercase', function() {
     })
 
     it('should lowercase the input', function(done) {
-        parse('HELLO WORLD', {}, function(err, result) {
+        lowercase('HELLO WORLD', {}, function(err, result) {
             assert.ifError(err)
             assert.equal(result, 'hello world')
             done()
@@ -21,14 +21,14 @@ describe('lowercase', function() {
     })
 
     it('should tolerate missing values', function(done) {
-        parse(undefined, {}, function(err, result) {
+        lowercase(undefined, {}, function(err, result) {
             assert.ifError(err)
             assert.equal(result, undefined)
             done()
         })
     })
 
-    function parse(input, params, cb) {
+    function lowercase(input, params, cb) {
         flow.run.fn(input, {
             params: {
                 task: string.lowercase,

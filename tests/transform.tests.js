@@ -264,7 +264,7 @@ describe('AC/DC', function() {
             })
 
             if (runner === flow.domain) {
-                it('shoud yield thrown errors', function(done) {
+                it('should yield thrown errors', function(done) {
                     acdc(flow.domain).run(function(dsl, cb) {
                         cb({
                             task: {
@@ -280,7 +280,7 @@ describe('AC/DC', function() {
                     })
                 })
 
-                it('shoud yield thrown errors in async code', function(done) {
+                it('should yield thrown errors in async code', function(done) {
                     acdc(flow.domain).run(function(dsl, cb) {
                         cb({
                             task: {
@@ -298,7 +298,7 @@ describe('AC/DC', function() {
                     })
                 })
 
-                it('shoud yield errors thrown from synchronous code wrapped by async', function(done) {
+                it('should yield errors thrown from synchronous code wrapped by async', function(done) {
                     acdc(flow.domain).run(function(dsl, cb) {
                         cb({
                             task: {
