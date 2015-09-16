@@ -12,7 +12,7 @@ describe('Property Set Value', function() {
         })
     })
 
-    it('should require a to path', function(done) {
+    it('should require the to path to be a string', function(done) {
         setValue(undefined, { value: 3, to: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "to" fails because ["to" must be a string]]')

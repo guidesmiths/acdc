@@ -4,7 +4,7 @@ var property = require('../../../lib/tasks/property')
 
 describe('Property Copy', function() {
 
-    it('should require a from path', function(done) {
+    it('should require from path to be a string', function(done) {
         copy({}, { from: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "from" fails because ["from" must be a string]]')
@@ -12,7 +12,7 @@ describe('Property Copy', function() {
         })
     })
 
-    it('should require a to path', function(done) {
+    it('should require to path to be a string', function(done) {
         copy({}, { from: 'a.b.c', to: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "to" fails because ["to" must be a string]]')
