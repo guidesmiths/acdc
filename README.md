@@ -40,7 +40,3 @@ acdc()
     })
 ```
 
-## Concepts
-
-AC/DC works on the concept of flows of tasks. The output from one task becomes the input for the next. Tasks may control the flow (e.g. by forking the input to multiple subflows), select part of the input document
-
