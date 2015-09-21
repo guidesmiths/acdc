@@ -159,7 +159,7 @@ acdc()
 ```
 
 ### Provided Tasks
-AC/DC provides scores of tasks for transformation and flow control. We haven't got around to documenting them yet. Until we do, you'll need to use the source and tests.
+AC/DC provides scores of tasks for transformation and flow control. We haven't got around to documenting them yet. Until we do, you'll need to use the source and tests. The key ones are in the ```flow```, ```logic``` and ```property``` folders.
 
 ### Custom Tasks
 A simple task is an object with a 'fn' property of type function. We refer to this object as the task definition.
