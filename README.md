@@ -115,7 +115,7 @@ acdc()
                 copy('details.firstName', 'firstName'),
                 copy('details.lastName', 'lastName'),
                 sequence([
-                    render('{{details.title}}. {{details.firstName}} {{details.lastName'),
+                    render('{{details.title}}. {{details.firstName}} {{details.lastName}}'),
                     set('fullName')
                 ])
             ]),
