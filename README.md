@@ -232,7 +232,7 @@ If you write lots of custom tasks you may want to organise them into libraries a
 
 ### Inline Tasks
 You can add tasks inline as follows...
-
+```js
 acdc()
     .bind(tasks.flow),
     .bind(tasks.property)
