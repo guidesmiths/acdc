@@ -34,6 +34,20 @@ describe('JSON Pointer Get', function() {
         })
     })
 
+    it('should return a copy of the input if the path is empty', function(done) {
+        var input = {
+            a: [
+                { b: 2 }
+            ]
+        }
+        get(input, { path: '' }, function(err, result) {
+            assert.ifError(err)
+            assert.deepEqual(result, input)
+            assert.equal(result === input, false)
+            done()
+        })
+    })
+
     it('should tolerate missing values', function(done) {
         get({}, { path: '/foo/3/bar' }, function(err, result) {
             assert.ifError(err)
