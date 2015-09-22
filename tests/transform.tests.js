@@ -34,24 +34,6 @@ describe('AC/DC', function() {
                 })
             })
 
-            it('should execute a task', function(done) {
-                var executed = false
-                acdc(runner).run(function(dsl, cb) {
-                    cb({
-                        task: {
-                            fn: function dummy(input, ctx, cb) {
-                                executed = true
-                                cb()
-                            }
-                        }
-                    })
-                }).done(function(err) {
-                    assert.ifError(err)
-                    assert.ok(executed)
-                    done()
-                })
-            })
-
             it('should yield a result', function(done) {
                 acdc(runner).run(function(dsl, cb) {
                     cb({
@@ -261,6 +243,33 @@ describe('AC/DC', function() {
                     assert.equal(err.message, 'seq has already been bound')
                     done()
                 }
+            })
+
+            it('should not cause maximum call stack size exceeded errors', function(done) {
+
+                this.timeout(8000)
+
+                var executed = 0
+                var tasks = []
+                for (var i = 0; i < 50000; i++) {
+                    tasks.push({
+                        task: {
+                            fn: function dummy(input, ctx, cb) {
+                                executed++
+                                cb()
+                            }
+                        }
+                    })
+                }
+
+                acdc(runner)
+                    .run(function(dsl, cb) {
+                        cb(flow.sequence(tasks))
+                    }).done(function(err) {
+                        assert.ifError(err)
+                        assert.equal(executed, 50000)
+                        done()
+                    })
             })
 
             if (runner === flow.domain) {
