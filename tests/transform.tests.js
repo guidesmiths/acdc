@@ -201,6 +201,18 @@ describe('AC/DC', function() {
                     })
             })
 
+            it('should reject shorthand functions with too many arguments', function(done) {
+                try {
+                    acdc(runner)
+                        .run(function(dsl, cb) {
+                            cb(flow.sequence(1, 2))
+                        })
+                } catch(err) {
+                    assert.equal(err.message, 'Task sequence has 2 arguments but only takes 1 parameters')
+                    done()
+                }
+            })
+
             it('should support aliased task functions', function(done) {
                 acdc(runner)
                     .bind(flow.sequence).alias('seq')
