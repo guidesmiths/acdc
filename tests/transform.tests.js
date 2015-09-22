@@ -250,21 +250,27 @@ describe('AC/DC', function() {
                 this.timeout(8000)
 
                 var executed = 0
-                var tasks = []
+                var items = []
                 for (var i = 0; i < 50000; i++) {
-                    tasks.push({
-                        task: {
-                            fn: function dummy(input, ctx, cb) {
-                                executed++
-                                cb()
-                            }
-                        }
-                    })
+                    items.push(i)
                 }
 
                 acdc(runner)
                     .run(function(dsl, cb) {
-                        cb(flow.sequence(tasks))
+                        cb(flow.sequence([
+                            flow.output(items),
+                            {
+                                task: collection.map,
+                                params: {
+                                    task: {
+                                        fn: function uppercase(input, ctx, cb) {
+                                            executed++
+                                            cb()
+                                        }
+                                    }
+                                }
+                            }
+                        ]))
                     }).done(function(err) {
                         assert.ifError(err)
                         assert.equal(executed, 50000)
