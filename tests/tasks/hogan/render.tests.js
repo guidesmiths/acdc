@@ -1,19 +1,19 @@
 var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
-var string = require('../../../lib/tasks/string')
+var hogan = require('../../../lib/tasks/hogan')
 
-describe('format', function() {
+describe.only('hogan render', function() {
 
-    it('should require input to be an array', function(done) {
-        format('a', {}, function(err) {
+    it('should require input to be an object', function(done) {
+        render('a', {}, function(err) {
             assert.ok(err)
-            assert.equal(err.message, 'child "input" fails because ["input" must be an array]')
+            assert.equal(err.message, 'child "input" fails because ["input" must be an object]')
             done()
         })
     })
 
     it('should require template parameter', function(done) {
-        format([], {}, function(err) {
+        render({}, {}, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "template" fails because ["template" is required]]')
             done()
@@ -21,33 +21,33 @@ describe('format', function() {
     })
 
     it('should require template to be a string', function(done) {
-        format([], { template: 1 }, function(err) {
+        render({}, { template: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "template" fails because ["template" must be a string]]')
             done()
         })
     })
 
-    it('should format the input', function(done) {
-        format(['a', 1], { template: '%s/%d' }, function(err, result) {
+    it('should render the input', function(done) {
+        render({a: 1}, { template: '{{a}}' }, function(err, result) {
             assert.ifError(err)
-            assert.strictEqual(result, 'a/1')
+            assert.strictEqual(result, '1')
             done()
         })
     })
 
     it('should tolerate missing values', function(done) {
-        format(undefined, { template: '%s' }, function(err, result) {
+        render(undefined, { template: '{{a}}' }, function(err, result) {
             assert.ifError(err)
             assert.equal(result, undefined)
             done()
         })
     })
 
-    function format(input, params, cb) {
+    function render(input, params, cb) {
         flow.run.fn(input, {
             params: {
-                task: string.format,
+                task: hogan.render,
                 params: params
             }
         }, cb)
