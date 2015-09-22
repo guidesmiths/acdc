@@ -12,10 +12,18 @@ describe('JSON Pointer Set', function() {
         })
     })
 
-    it('should set the value specified by the path', function(done) {
+    it('should write the input value to the property specified by the path', function(done) {
         set(2, { path: '/a/0/b' }, function(err, result) {
             assert.ifError(err)
             assert.strictEqual(result.a[0].b, 2)
+            done()
+        })
+    })
+
+    it('should write the specified value to the property specified by the path', function(done) {
+        set(2, { path: '/a/0/b', value: 'x' }, function(err, result) {
+            assert.ifError(err)
+            assert.strictEqual(result.a[0].b, 'x')
             done()
         })
     })
