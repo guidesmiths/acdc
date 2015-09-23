@@ -4,7 +4,7 @@ AC/DC is a library for transforming one JavaScript object into another. We wrote
 
 ## The Concepts
 
-AC/DC works on the concept of flows of tasks. The output from one task becomes the input for the next. The first task in a flow is implicitly set by AC/DC and will wrap the remaining tasks in a domain. The first explicit task in a flow will usually be a 'sequence', which will execute a collection of other tasks. For example...
+AC/DC works on the concept of flows of asynchronous tasks. The output from one task becomes the input for the next. The first task in a flow is implicitly set by AC/DC and will wrap the remaining tasks in a domain. The first explicit task in a flow will usually be a 'sequence', which will execute a collection of other tasks. For example...
 
 
 Given a customer
