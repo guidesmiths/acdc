@@ -1,6 +1,6 @@
 # AC/DC
 
-AC/DC is a library for transforming one JavaScript object into another. We wrote it because we needed to transform a complex, legacy feed into a simpler one, in such a way that the poor soul who had to maintain it wouldn't going insane. It might also be useful for generating view models.
+AC/DC is a library for transforming one JavaScript object into another. We wrote it because we needed to transform an incredibly complex legacy feed into a simpler one, in such a way that the poor soul who had to maintain it wouldn't going insane. It might also be useful for generating view models.
 
 ## The Concepts
 
