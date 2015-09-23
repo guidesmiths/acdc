@@ -28,6 +28,14 @@ describe('JSON Pointer Copy', function() {
         })
     })
 
+    it('should default the destination path to the source path', function(done) {
+        copy({ a: { b: 2 } }, { from: '/a/b' }, function(err, result) {
+            assert.ifError(err)
+            assert.strictEqual(result.a.b, 2)
+            done()
+        })
+    })
+
     it('should copy the whole document when the source path is empty', function(done) {
         copy({ a: { b: 2 } }, { from: '', to: '/x/y' }, function(err, result) {
             assert.ifError(err)

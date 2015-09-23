@@ -20,7 +20,7 @@ describe('Property Copy When', function() {
         })
     })
 
-    it('should require a to path', function(done) {
+    it('should require a to path to be a string', function(done) {
         copyWhen(undefined, { condition: { task: { fn: function() {} } }, from: 'x', to: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "to" fails because ["to" must be a string]]')
@@ -60,6 +60,23 @@ describe('Property Copy When', function() {
         }, function(err, result) {
             assert.ifError(err)
             assert.equal(result, undefined)
+            done()
+        })
+    })
+
+    it('should default the to path', function(done) {
+        copyWhen({ foo: 'oh yeah!' }, {
+            condition: {
+                task: {
+                    fn: function condition(input, ctx, cb) {
+                        cb(null, true)
+                    }
+                }
+            },
+            from: 'foo'
+        }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.foo, 'oh yeah!')
             done()
         })
     })

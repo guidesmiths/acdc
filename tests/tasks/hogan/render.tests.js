@@ -2,7 +2,7 @@ var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
 var hogan = require('../../../lib/tasks/hogan')
 
-describe.only('hogan render', function() {
+describe('hogan render', function() {
 
     it('should require input to be an object', function(done) {
         render('a', {}, function(err) {

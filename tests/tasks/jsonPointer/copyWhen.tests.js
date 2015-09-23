@@ -64,6 +64,23 @@ describe('JSON Pointer Copy When', function() {
         })
     })
 
+    it('should default the to path', function(done) {
+        copyWhen({ foo: 'oh yeah!' }, {
+            condition: {
+                task: {
+                    fn: function condition(input, ctx, cb) {
+                        cb(null, true)
+                    }
+                }
+            },
+            from: '/foo'
+        }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.foo, 'oh yeah!')
+            done()
+        })
+    })
+
     function copyWhen(input, params, cb) {
         flow.run.fn(input, {
             params: {

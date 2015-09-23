@@ -64,6 +64,23 @@ describe('Json Pointer Copy Unless', function() {
         })
     })
 
+    it('should default the to path', function(done) {
+        copyUnless({ foo: 'oh yeah!' }, {
+            condition: {
+                task: {
+                    fn: function condition(input, ctx, cb) {
+                        cb(null, false)
+                    }
+                }
+            },
+            from: '/foo'
+        }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.foo, 'oh yeah!')
+            done()
+        })
+    })
+
     function copyUnless(input, params, cb) {
         flow.run.fn(input, {
             params: {
