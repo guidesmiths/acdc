@@ -36,7 +36,7 @@ describe('Property Transform When', function() {
         })
     })
 
-    it('should copy when the condition is true', function(done) {
+    it('should transform when the condition is true', function(done) {
         transformWhen({ foo: 'oh yeah!' }, {
             condition: {
                 task: {
@@ -61,7 +61,7 @@ describe('Property Transform When', function() {
         })
     })
 
-    it('should not copy when condition is false', function(done) {
+    it('should not transform when condition is false', function(done) {
         transformWhen({ foo: 'oh yeah!' }, {
             condition: {
                 task: {
@@ -83,6 +83,30 @@ describe('Property Transform When', function() {
         }, function(err, result) {
             assert.ifError(err)
             assert.equal(result, undefined)
+            done()
+        })
+    })
+
+    it('should default to path', function(done) {
+        transformWhen({ foo: 'oh yeah!' }, {
+            condition: {
+                task: {
+                    fn: function condition(input, ctx, cb) {
+                        cb(null, true)
+                    }
+                }
+            },
+            from: 'foo',
+            transformer: {
+                task: {
+                    fn: function(input, ctx, cb) {
+                        cb(null, input + '!!')
+                    }
+                }
+            }
+        }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.foo, 'oh yeah!!!')
             done()
         })
     })

@@ -28,7 +28,7 @@ describe('Json Pointer Transform Unless', function() {
         })
     })
 
-    it('should require a to path', function(done) {
+    it('should require a to path to be a string', function(done) {
         transformUnless(undefined, { condition: { task: { fn: function() {} } }, from: 'x', transformer: { task: { fn: function() {} } }, to: 1 }, function(err) {
             assert.ok(err)
             assert.equal(err.message, 'child "params" fails because [child "to" fails because ["to" must be a string]]')
@@ -36,7 +36,7 @@ describe('Json Pointer Transform Unless', function() {
         })
     })
 
-    it('should copy when the condition is false', function(done) {
+    it('should transform when the condition is false', function(done) {
         transformUnless({ foo: 'oh yeah!' }, {
             condition: {
                 task: {
@@ -61,7 +61,7 @@ describe('Json Pointer Transform Unless', function() {
         })
     })
 
-    it('should not copy when condition is true', function(done) {
+    it('should not transform when condition is true', function(done) {
         transformUnless({ foo: 'oh yeah!' }, {
             condition: {
                 task: {
@@ -83,6 +83,30 @@ describe('Json Pointer Transform Unless', function() {
         }, function(err, result) {
             assert.ifError(err)
             assert.equal(result, undefined)
+            done()
+        })
+    })
+
+    it('should default the to path', function(done) {
+        transformUnless({ foo: 'oh yeah!' }, {
+            condition: {
+                task: {
+                    fn: function condition(input, ctx, cb) {
+                        cb(null, false)
+                    }
+                }
+            },
+            from: '/foo',
+            transformer: {
+                task: {
+                    fn: function(input, ctx, cb) {
+                        cb(null, input + '!!')
+                    }
+                }
+            }
+        }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.foo, 'oh yeah!!!')
             done()
         })
     })
