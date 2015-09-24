@@ -216,7 +216,7 @@ var schemas = require('acdc/lib/schemas')
 var R = require('ramda')
 
 module.exports = {
-    fn: function get(input, ctx, cb) {
+    fn: function customTask(input, ctx, cb) {
         cb(null, ctx.params.firstName + ' ' + ctx.parmas.lastName)
     },
     schema: schemas.context.keys({

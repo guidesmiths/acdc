@@ -1,6 +1,8 @@
 var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
 var collection = require('../../../lib/tasks/collection')
+var string = require('../../../lib/tasks/string')
+var uppercase = string.uppercase
 
 describe('Map', function() {
 
@@ -21,12 +23,7 @@ describe('Map', function() {
     })
 
     it('should map an array', function(done) {
-        map(['a', 'b', 'c'], { task: {
-                fn: function uppercase(input, ctx, cb) {
-                    cb(null, input.toUpperCase())
-                }
-            }
-        }, function(err, results) {
+        map(['a', 'b', 'c'], { task: uppercase() }, function(err, results) {
             assert.ifError(err)
             assert.equal(results.length, 3)
             assert.equal(results[0], 'A')
@@ -37,9 +34,12 @@ describe('Map', function() {
     })
 
     it('should map an object', function(done) {
-        map({ a: 'a', b: 'b', c: 'c'}, { task: {
-                fn: function uppercase(input, ctx, cb) {
-                    cb(null, input.value.toUpperCase())
+        map({ a: 'a', b: 'b', c: 'c'}, {
+            task: {
+                task: {
+                    fn: function uppercase(input, ctx, cb) {
+                        cb(null, input.value.toUpperCase())
+                    }
                 }
             }
         }, function(err, results) {
@@ -55,8 +55,10 @@ describe('Map', function() {
     it('should yield mapping errors', function(done) {
         map([1, 2, 3], {
             task: {
-                fn: function(input, ctx, cb) {
-                    cb(new Error('nothing to see here'))
+                task: {
+                    fn: function(input, ctx, cb) {
+                        cb(new Error('nothing to see here'))
+                    }
                 }
             }
         }, function(err) {

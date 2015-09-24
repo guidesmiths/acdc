@@ -275,9 +275,11 @@ describe('AC/DC', function() {
                                 task: collection.map,
                                 params: {
                                     task: {
-                                        fn: function uppercase(input, ctx, cb) {
-                                            executed++
-                                            cb()
+                                        task: {
+                                            fn: function dummy(input, ctx, cb) {
+                                                executed++
+                                                cb()
+                                            }
                                         }
                                     }
                                 }
