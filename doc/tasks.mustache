@@ -1,12 +1,12 @@
 # Task Libraries
 {{#libraries}}
-    ## {{library}}
-    {{#tasks}}
-        ### {{name}}
-        |- Paramter -|- Type -|- Attributes -|
-        |  input     | {{#input}}{{input.type}}{{/input}}{{^input}}any{{/input}} | {{input.flags.presence}} |
-        {{#params}}
-        |  {{name}}  | {{#type}}{{type}}{{/type}}{{^type}}any{{/type}} | {{flags.presence}} |
-        {{/params}}
-    {{/tasks}}
+## {{library}}
+{{#tasks}}
+### {{name}}
+|- Paramter -|- Type -|- Attributes -|
+|  input     | {{#input}}{{input.type}}{{/input}}{{^input}}any{{/input}} | {{input.flags.presence}} |
+{{#params}}
+|  {{name}}  | {{#type}}{{type}}{{/type}}{{^type}}any{{/type}} | {{flags.presence}} |
+{{/params}}
+{{/tasks}}
 {{/libraries}}
