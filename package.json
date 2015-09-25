@@ -26,7 +26,8 @@
     "eslint-plugin-imperative": "^0.0.2"
   },
   "scripts": {
-    "test": "mocha --recursive tests"
+    "test": "mocha --recursive tests",
+    "taskdoc": "node ./doc/generate"
   },
   "author": "GuideSmiths",
   "license": "ISC",
