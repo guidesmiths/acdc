@@ -3,7 +3,8 @@
 ## {{library}}
 {{#tasks}}
 ### {{name}}
-|- Paramter -|- Type -|- Attributes -|
+|  Paramter  |  Type  |  Attributes  |
+|------------|--------|--------------|
 |  input     | {{#input}}{{input.type}}{{/input}}{{^input}}any{{/input}} | {{input.flags.presence}} |
 {{#params}}
 |  {{name}}  | {{#type}}{{type}}{{/type}}{{^type}}any{{/type}} | {{flags.presence}} |
