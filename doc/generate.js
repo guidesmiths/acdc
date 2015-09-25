@@ -21,9 +21,7 @@ acdc()
     .run(function(dsl, cb) {
         with(dsl) {
             cb(sequence([
-                output({
-                    logic: tasks.logic
-                }),
+                output(tasks),
                 map(sequence([
                     fork([
                         copy('key', 'library'),
