@@ -19,70 +19,6 @@ describe('Fork', function() {
         })
     })
 
-    it('should execute an array tasks in parallel', function(done) {
-        var order = []
-        fork(undefined, {
-            tasks: [
-                {
-                    task: {
-                        fn: function one(input, ctx, cb) {
-                            setImmediate(function() {
-                                order.push(1)
-                                cb()
-                            })
-                        }
-                    }
-                },
-                {
-                    task: {
-                        fn: function two(input, ctx, cb) {
-                            order.push(2)
-                            cb()
-                        }
-                    }
-                }
-            ]
-        }, function(err) {
-            assert.ifError(err)
-            assert.equal(order.length, 2)
-            assert.equal(order[0], 2)
-            assert.equal(order[1], 1)
-            done()
-        })
-    })
-
-    it('should execute a map tasks in parallel', function(done) {
-        var order = []
-        fork(undefined, {
-            tasks: {
-                a: {
-                    task: {
-                        fn: function one(input, ctx, cb) {
-                            setImmediate(function() {
-                                order.push(1)
-                                cb()
-                            })
-                        }
-                    }
-                },
-                b: {
-                    task: {
-                        fn: function two(input, ctx, cb) {
-                            order.push(2)
-                            cb()
-                        }
-                    }
-                }
-            }
-        }, function(err) {
-            assert.ifError(err)
-            assert.equal(order.length, 2)
-            assert.equal(order[0], 2)
-            assert.equal(order[1], 1)
-            done()
-        })
-    })
-
     it('should pass the same input to each task', function(done) {
         fork(1, {
             tasks: {
@@ -105,6 +41,59 @@ describe('Fork', function() {
             assert.ifError(err)
             assert.equal(result.a, 2)
             assert.equal(result.b, 3)
+            done()
+        })
+    })
+
+   it('should yield an array', function(done) {
+        fork(undefined, {
+            tasks: [
+                {
+                    task: {
+                        fn: function one(input, ctx, cb) {
+                            cb(null, 'a')
+                        }
+                    }
+                },
+                {
+                    task: {
+                        fn: function two(input, ctx, cb) {
+                            cb(null, 'b')
+                        }
+                    }
+                }
+            ]
+        }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.sort()[0], 'a')
+            assert.equal(result.sort()[1], 'b')
+            done()
+        })
+    })
+
+    it('should yield a map', function(done) {
+        fork(undefined, {
+            tasks: {
+                a: {
+                    task: {
+                        fn: function one(input, ctx, cb) {
+                            cb(null, 'a')
+                        }
+                    }
+                },
+                b: {
+                    task: {
+                        fn: function two(input, ctx, cb) {
+                            cb(null, 'b')
+                            cb()
+                        }
+                    }
+                }
+            }
+        }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.a, 'a')
+            assert.equal(result.b, 'b')
             done()
         })
     })

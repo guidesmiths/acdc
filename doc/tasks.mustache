@@ -2,12 +2,12 @@
 {{#libraries}}
 ## {{library}}
 {{#tasks}}
-### {{name}}
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | {{#input}}{{input.type}}{{/input}}{{^input}}any{{/input}} | {{input.flags.presence}} |
+### {{task}}
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | {{#input}}{{input.type}}{{/input}}{{^input}}any{{/input}} | {{input.mandatory}} | |
 {{#params}}
-|  {{name}}  | {{#type}}{{type}}{{/type}}{{^type}}any{{/type}} | {{flags.presence}} |
+|  {{name}}   | {{#type}}{{type}}{{/type}}{{^type}}any{{/type}} | {{mandatory}} | {{default}} |
 {{/params}}
 {{/tasks}}
 {{/libraries}}

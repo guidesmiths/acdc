@@ -5,9 +5,9 @@ var template = fs.readFileSync(path.join(__dirname, 'tasks.mustache')).toString(
 var shorthand = require('../lib/utils/shorthand')
 var acdc = require('..')
 
-var describe = shorthand({
-    fn: function describe(input, ctx, cb) {
-        cb(null, input.schema ? input.schema.describe() : undefined)
+var schema = shorthand({
+    fn: function schema(input, ctx, cb) {
+        cb(null, input ? input.describe() : undefined)
     }
 })
 
@@ -23,39 +23,55 @@ acdc()
             cb(sequence([
                 output(tasks),
                 map(sequence([
-                    fork([
-                        copy('key', 'library'),
-                        sequence([
-                            get('value'),
+                    fork({
+                        library: get('library'),
+                        tasks: sequence([
+                            get('tasks'),
                             map(sequence([
-                                fork([
-                                    copy('key', 'name'),
-                                    sequence([
-                                        transform('value', describe(), 'schema'),
-                                        fork([
-                                            copy('schema.children.input', 'input'),
-                                            sequence([
-                                                get('schema.children.params.children'),
-                                                map(sequence([
-                                                    fork([
-                                                        copy('key', 'name'),
-                                                        copy('value', 'value')
-                                                    ]),
-                                                    merge()
-                                                ])),
-                                                set('params')
+                                fork({
+                                    task: get('name'),
+                                    input: sequence([
+                                        transform('definition.schema', schema(), 'schema'),
+                                        fork({
+                                            type: sequence([
+                                                get('schema.children.input.type')
+                                            ]),
+                                            mandatory: sequence([
+                                                get('schema.children.input.flags.presence'),
+                                                choose([
+                                                    when(eq('optional'), output('No')),
+                                                    otherwise(output('Yes'))
+                                                ])
                                             ])
-                                        ]),
-                                        merge(),
+                                        }),
+                                    ]),
+                                    params: sequence([
+                                        transform('definition.schema', schema(), 'schema'),
+                                        get('schema.children.params.children'),
+                                        map(sequence([
+                                            fork({
+                                                name: get('name'),
+                                                type: sequence([
+                                                    get('param.type')
+                                                ]),
+                                                mandatory: sequence([
+                                                    get('param.flags.presence'),
+                                                    choose([
+                                                        when(eq('optional'), output('No')),
+                                                        otherwise(output('Yes'))
+                                                    ])
+                                                ]),
+                                                default: sequence([
+                                                    get('param.flags.default')
+                                                ])
+                                            }),
+                                        ]), 'name', 'param')
                                     ])
-                                ]),
-                                merge()
-                            ])),
-                            set('tasks')
+                                }),
+                            ]), 'name', 'definition')
                         ])
-                    ]),
-                    merge()
-                ])),
+                    })
+                ]), 'library', 'tasks'),
                 set('libraries'),
                 render(template)
             ]))

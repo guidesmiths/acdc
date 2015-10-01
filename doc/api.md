@@ -1,263 +1,265 @@
 # Task Libraries
 ## array
 ### merge
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | array |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | array | Yes | |
 ## collection
 ### map
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | alternatives | optional |
-|  task  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | alternatives | No | |
+|  task   | object | Yes |  |
+|  key   | string | No | key |
+|  value   | string | No | value |
 ## date
 ### formatDate
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | date | optional |
-|  format  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | date | No | |
+|  format   | string | No |  |
 ### parseDate
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | string | optional |
-|  format  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | string | No | |
+|  format   | alternatives | Yes |  |
 ## flow
 ### domain
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  name  | any |  |
-|  task  | any |  |
-|  params  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  name   | string | No |  |
+|  task   | alternatives | Yes |  |
+|  params   | object | No |  |
 ### fork
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  tasks  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  tasks   | alternatives | Yes |  |
 ### output
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  value  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  value   | any | No |  |
 ### run
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  name  | any |  |
-|  task  | any |  |
-|  params  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  name   | string | No |  |
+|  task   | alternatives | Yes |  |
+|  params   | object | No |  |
 ### sequence
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  tasks  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  tasks   | alternatives | Yes |  |
 ## hogan
 ### render
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | object | optional |
-|  template  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | object | No | |
+|  template   | string | Yes |  |
 ## jsonPointer
 ### copy
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | alternatives |  |
-|  from  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | alternatives | Yes | |
+|  from   | string | Yes |  |
+|  to   | string | No |  |
 ### copyUnless
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  from  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  from   | string | Yes |  |
+|  to   | string | No |  |
 ### copyWhen
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  from  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  from   | string | Yes |  |
+|  to   | string | No |  |
 ### get
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | alternatives |  |
-|  path  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | alternatives | Yes | |
+|  path   | string | Yes |  |
 ### set
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  path  | any |  |
-|  value  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  path   | string | Yes |  |
+|  value   | any | No |  |
 ### transform
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | alternatives |  |
-|  from  | any |  |
-|  transformer  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | alternatives | Yes | |
+|  from   | string | Yes |  |
+|  transformer   | object | Yes |  |
+|  to   | string | No |  |
 ### transformUnless
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  from  | any |  |
-|  transformer  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  from   | string | Yes |  |
+|  transformer   | object | Yes |  |
+|  to   | string | No |  |
 ### transformWhen
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  from  | any |  |
-|  transformer  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  from   | string | Yes |  |
+|  transformer   | object | Yes |  |
+|  to   | string | No |  |
 ## logic
 ### always
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      |  | Yes | |
 ### and
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  tasks  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  tasks   | array | Yes |  |
 ### choose
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  options  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  options   | array | Yes |  |
 ### contains
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | array |  |
-|  value  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | array | Yes | |
+|  value   | any | Yes |  |
 ### eq
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  value  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  value   | any | Yes |  |
 ### falsey
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      |  | Yes | |
 ### not
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  task  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  task   | object | Yes |  |
 ### or
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  tasks  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  tasks   | array | Yes |  |
 ### otherwise
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  task  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  task   | object | Yes |  |
 ### truthy
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      |  | Yes | |
 ### unless
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  task  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  task   | object | Yes |  |
 ### when
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  task  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  task   | object | Yes |  |
 ## numeric
 ### parseFloat
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | number | optional |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | number | No | |
 ### parseInteger
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | number | optional |
-|  radix  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | number | No | |
+|  radix   | number | Yes |  |
 ## property
 ### copy
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | alternatives |  |
-|  from  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | alternatives | Yes | |
+|  from   | string | Yes |  |
+|  to   | string | No |  |
 ### copyUnless
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  from  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  from   | string | Yes |  |
+|  to   | string | No |  |
 ### copyWhen
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  from  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  from   | string | Yes |  |
+|  to   | string | No |  |
 ### debug
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  path  | any |  |
-|  template  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  path   | string | No |  |
+|  template   | string | No |  |
 ### get
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | alternatives |  |
-|  path  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | alternatives | Yes | |
+|  path   | string | Yes |  |
 ### set
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  path  | any |  |
-|  value  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  path   | string | Yes |  |
+|  value   | any | No |  |
 ### transform
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | alternatives |  |
-|  from  | any |  |
-|  transformer  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | alternatives | Yes | |
+|  from   | string | Yes |  |
+|  transformer   | object | Yes |  |
+|  to   | string | No |  |
 ### transformUnless
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  from  | any |  |
-|  transformer  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  from   | string | Yes |  |
+|  transformer   | object | Yes |  |
+|  to   | string | No |  |
 ### transformWhen
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
-|  condition  | any |  |
-|  from  | any |  |
-|  transformer  | any |  |
-|  to  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  from   | string | Yes |  |
+|  transformer   | object | Yes |  |
+|  to   | string | No |  |
 ## string
 ### format
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | array | optional |
-|  template  | any |  |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | array | No | |
+|  template   | string | Yes |  |
 ### lowercase
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | string | optional |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | string | No | |
 ### str
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | any | optional |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
 ### uppercase
-|  Paramter  |  Type  |  Attributes  |
-|------------|--------|--------------|
-|  input     | string | optional |
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | string | No | |
