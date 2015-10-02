@@ -59,9 +59,7 @@ acdc()
                                         map(sequence([
                                             fork({
                                                 name: get('name'),
-                                                type: sequence([
-                                                    get('param.type')
-                                                ]),
+                                                type: get('param.type'),
                                                 mandatory: sequence([
                                                     get('param.flags.presence'),
                                                     choose([
