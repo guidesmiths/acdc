@@ -2,6 +2,7 @@
 ## array
 ### merge
 Merges arrays of objects
+
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
 |  input      | array | Yes | |
