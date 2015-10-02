@@ -65,9 +65,7 @@ acdc()
                                                         otherwise(output('Yes'))
                                                     ])
                                                 ]),
-                                                default: sequence([
-                                                    get('param.flags.default')
-                                                ])
+                                                default: get('param.flags.default')
                                             }),
                                         ]), 'name', 'param')
                                     ])
