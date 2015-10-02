@@ -159,7 +159,7 @@ acdc()
 ```
 
 ### Provided Tasks
-AC/DC provides scores of tasks for transformation and flow control. The most important ones are in the ```flow```, ```logic``` and ```property``` folders. For further information please consult the [Task API](../doc/api.md)
+AC/DC provides scores of tasks for transformation and flow control. The most important ones are in the ```flow```, ```logic``` and ```property``` folders. For further information please consult the [Task API](https://github.com/guidesmiths/acdc/blob/master/doc/api.md)
 
 ### Custom Tasks
 A simple task is an object with a 'fn' property of type function. We refer to this object as the task definition.
