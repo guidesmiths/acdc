@@ -41,9 +41,7 @@ acdc()
                                     input: sequence([
                                         transform('definition.schema', schema(), 'schema'),
                                         fork({
-                                            type: sequence([
-                                                get('schema.children.input.type')
-                                            ]),
+                                            type: get('schema.children.input.type'),
                                             mandatory: sequence([
                                                 get('schema.children.input.flags.presence'),
                                                 choose([
