@@ -9,11 +9,11 @@ Merges arrays of objects
 |  input      | array | Yes | |
 
 ```
-merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
+merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }])
 ```
 ## collection
 ### map
-
+Iterates over the input, mapping each item to the supplied task.
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -23,9 +23,12 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
 |  key   | string | No | key |
 |  value   | string | No | value |
 
+```
+map([1, 2, 3], double())
+```
 ## date
 ### formatDate
-
+Converts a date into a string
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -33,8 +36,11 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
 |  input      | date | No | |
 |  format   | string | No |  |
 
+```
+format()
+```
 ### parseDate
-
+Parses a string into a date
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -42,9 +48,12 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
 |  input      | string | No | |
 |  format   | alternatives | No |  |
 
+```
+parseDate()
+```
 ## flow
 ### domain
-
+Runs a task within a domain
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -54,8 +63,11 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
 |  task   | alternatives | Yes |  |
 |  params   | object | No |  |
 
+```
+domain()
+```
 ### fork
-
+Forks the input
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -63,8 +75,11 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
 |  input      | any | No | |
 |  tasks   | alternatives | Yes |  |
 
+```
+fork({ uc: uppercase(), lc: lowercase(), cc: camelcase() })
+```
 ### output
-
+Sets the input document for subsequent tasks
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -72,8 +87,11 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
 |  input      | any | No | |
 |  value   | any | No |  |
 
+```
+output("New input document")
+```
 ### run
-
+Runs a task
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -83,8 +101,11 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
 |  task   | alternatives | Yes |  |
 |  params   | object | No |  |
 
+```
+run(sequence([...]))
+```
 ### sequence
-
+Composes a sequence of tasks
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -92,6 +113,9 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }]
 |  input      | any | No | |
 |  tasks   | alternatives | Yes |  |
 
+```
+sequence([task1(), task2(), task3()])
+```
 ## hogan
 ### render
 Renders the input document using a hogan template
@@ -107,7 +131,7 @@ render("Hello {{firstName}}")
 ```
 ## jsonPointer
 ### copy
-
+Copiess a from one document to another
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -116,8 +140,11 @@ render("Hello {{firstName}}")
 |  from   | string | Yes |  |
 |  to   | string | No |  |
 
+```
+copy("/customer/contact/name", "/name")
+```
 ### copyUnless
-
+Copies a property into a new document unless a condition is met
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -127,8 +154,11 @@ render("Hello {{firstName}}")
 |  from   | string | Yes |  |
 |  to   | string | No |  |
 
+```
+copyUnless(eq("not applicable"), "/customer/contact/name", "/name"))
+```
 ### copyWhen
-
+Copies a property into a new document when a condition is met
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -138,8 +168,11 @@ render("Hello {{firstName}}")
 |  from   | string | Yes |  |
 |  to   | string | No |  |
 
+```
+copyWhen(truthy(), "/customer/contact/name", "/name"))
+```
 ### get
-
+Gets a property from a document using a json pointer
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -147,8 +180,11 @@ render("Hello {{firstName}}")
 |  input      | alternatives | Yes | |
 |  path   | string | Yes |  |
 
+```
+get("/customer/contact/name")
+```
 ### set
-
+Sets a property in a new document using a json pointer
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -157,8 +193,11 @@ render("Hello {{firstName}}")
 |  path   | string | Yes |  |
 |  value   | any | No |  |
 
+```
+set("/customer/contact/name")
+```
 ### transform
-
+Passes the input document through an asynchronous transformation
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -168,8 +207,11 @@ render("Hello {{firstName}}")
 |  transformer   | object | Yes |  |
 |  to   | string | No |  |
 
+```
+transform("/customer/contact/email", lookup(), "/customer/username")
+```
 ### transformUnless
-
+Passes the input document through an asynchronous transformation unless a condition is met
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -180,8 +222,11 @@ render("Hello {{firstName}}")
 |  transformer   | object | Yes |  |
 |  to   | string | No |  |
 
+```
+transformUnless(falsey(), "/customer/contact/email", lookup(), "/customer/username")
+```
 ### transformWhen
-
+Passes the input document through an asynchronous transformation when a condition is met
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -192,6 +237,9 @@ render("Hello {{firstName}}")
 |  transformer   | object | Yes |  |
 |  to   | string | No |  |
 
+```
+transformWhen(matches(/.+@.+/, "/customer/contact/email", lookup(), "/customer/username")
+```
 ## logic
 ### always
 
