@@ -30,6 +30,14 @@ acdc()
                             map(sequence([
                                 fork({
                                     task: get('name'),
+                                    usage: sequence([
+                                        transform('definition.schema', schema(), 'schema'),
+                                        get('schema.meta[0].usage')
+                                    ]),
+                                    description: sequence([
+                                        transform('definition.schema', schema(), 'schema'),
+                                        get('schema.meta[0].description')
+                                    ]),
                                     input: sequence([
                                         transform('definition.schema', schema(), 'schema'),
                                         fork({

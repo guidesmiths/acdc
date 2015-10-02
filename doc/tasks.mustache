@@ -3,11 +3,17 @@
 ## {{library}}
 {{#tasks}}
 ### {{task}}
+{{description}}
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
 |  input      | {{#input}}{{input.type}}{{/input}}{{^input}}any{{/input}} | {{input.mandatory}} | |
 {{#params}}
 |  {{name}}   | {{#type}}{{type}}{{/type}}{{^type}}any{{/type}} | {{mandatory}} | {{default}} |
 {{/params}}
+{{#usage}}
+```
+{{usage}}
+```
+{{/usage}}
 {{/tasks}}
 {{/libraries}}
