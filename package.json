@@ -9,7 +9,7 @@
     "async": "^1.4.2",
     "debug": "^2.2.0",
     "hogan": "^1.0.2",
-    "joi": "^6.6.1",
+    "joi": "^6.7.1",
     "json-pointer": "^0.3.0",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^3.10.1",

@@ -22,7 +22,7 @@
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
 |  input      | string | No | |
-|  format   | alternatives | Yes |  |
+|  format   | alternatives | No |  |
 ## flow
 ### domain
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -183,7 +183,7 @@
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
 |  input      | number | No | |
-|  radix   | number | Yes |  |
+|  radix   | number | No | 10 |
 ## property
 ### copy
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -210,7 +210,7 @@
 |-------------|--------|--------------|-----------|
 |  input      | any | No | |
 |  path   | string | No |  |
-|  template   | string | No |  |
+|  template   | string | No | %s |
 ### get
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
