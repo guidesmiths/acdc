@@ -1,5 +1,16 @@
 # Task Libraries
 ## array
+### compact
+Compacts arrays of objects
+
+
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | array | Yes | |
+
+```
+compact([{ name: "fred" }, { age: 41 }, { gender: "Male" }])
+```
 ### merge
 Merges arrays of objects
 
