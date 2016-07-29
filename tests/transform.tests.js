@@ -259,7 +259,7 @@ describe('AC/DC', function() {
 
             it('should not cause maximum call stack size exceeded errors', function(done) {
 
-                this.timeout(10000)
+                this.timeout(20000)
 
                 var executed = 0
                 var items = []
