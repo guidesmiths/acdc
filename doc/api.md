@@ -59,6 +59,7 @@ Parses a string into a date
 |-------------|--------|--------------|-----------|
 |  input      | string | No | |
 |  format   | alternatives | No |  |
+|  timezone   | string | No |  |
 
 ```
 parseDate()
