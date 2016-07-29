@@ -1,7 +1,6 @@
 var assert = require('assert')
 var flow = require('../../../lib/tasks/flow')
 var logic = require('../../../lib/tasks/logic')
-var property = require('../../../lib/tasks/property')
 
 describe('Choose', function() {
 

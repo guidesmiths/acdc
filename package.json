@@ -27,6 +27,9 @@
   },
   "scripts": {
     "test": "mocha --recursive tests",
+    "lint": "eslint .",
+    "precommit": "npm run test",
+    "prepush": "npm run taskdoc",
     "taskdoc": "node ./doc/generate"
   },
   "author": "GuideSmiths",
