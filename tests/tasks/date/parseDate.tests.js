@@ -29,9 +29,17 @@ describe('Date Parse', function() {
     })
 
     it('should parse the input into a date using the specified format', function(done) {
-        parseDate('2010-10-20 04:30', { format: 'YYYY-MM-DD HH:mm', timezone: 'utc' }, function(err, result) {
+        parseDate('2010-02-20 04:30', { format: 'YYYY-MM-DD HH:mm' }, function(err, result) {
             assert.ifError(err)
-            assert.equal(result.toISOString(), '2010-10-20T03:30:00.000Z')
+            assert.equal(result.toISOString(), '2010-02-20T04:30:00.000Z')
+            done()
+        })
+    })
+
+    it('should parse the input into a date using the specified format and timezone', function(done) {
+        parseDate('2015-07-15 09:12', { format: 'YYYY-MM-DD HH:mm', timezone: 'America/Los_Angeles' }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result.toISOString(), '2015-07-15T16:12:00.000Z')
             done()
         })
     })
