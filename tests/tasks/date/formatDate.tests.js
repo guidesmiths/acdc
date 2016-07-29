@@ -29,9 +29,17 @@ describe('Date Format', function() {
     })
 
     it('should format the input using the specified format', function(done) {
-        formatDate(new Date('2015-07-15T16:12:00.000Z'), { format: 'YYYY-MM-DD HH:mm', 'timezone': 'Europe/France' }, function(err, result) {
+        formatDate(new Date('2015-02-15T16:12:00.000Z'), { format: 'YYYY-MM-DD HH:mm' }, function(err, result) {
             assert.ifError(err)
-            assert.equal(result, '2015-07-15 17:12')
+            assert.equal(result, '2015-02-15 16:12')
+            done()
+        })
+    })
+
+    it('should format the input using the specified format and timezone', function(done) {
+        formatDate(new Date('2015-07-15T16:12:00.000Z'), { format: 'YYYY-MM-DD HH:mm', 'timezone': 'America/Los_Angeles' }, function(err, result) {
+            assert.ifError(err)
+            assert.equal(result, '2015-07-15 09:12')
             done()
         })
     })
