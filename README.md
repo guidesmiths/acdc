@@ -1,5 +1,7 @@
-# AC/DC
+[![Build Status](https://img.shields.io/travis/guidesmiths/acdc/master.svg)](https://travis-ci.org/guidesmiths/acdc)
+[![Code Style](https://img.shields.io/badge/code%20style-imperative-brightgreen.svg)](https://github.com/guidesmiths/eslint-config-imperative)
 
+# AC/DC
 AC/DC is a library for transforming one JavaScript object into another. We wrote it because we needed to transform an horribly complicated legacy feed into something sane. It might also be useful for generating view models.
 
 ## The Concepts
