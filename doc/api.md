@@ -46,6 +46,7 @@ Converts a date into a string
 |-------------|--------|--------------|-----------|
 |  input      | date | No | |
 |  format   | string | No |  |
+|  timezone   | string | No |  |
 
 ```
 format()
