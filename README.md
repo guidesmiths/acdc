@@ -189,7 +189,7 @@ Before using your custom task in a flow you need to ```shorthand``` it. This wil
 
 Flow Definition
 ```js
-var customTask = require('../my/custom/task')
+var customTaskDef = require('../my/custom/task')
 var shorthand = require('acdc/lib/utils/shorthand')
 var customTask = shorthand(customTaskDef)
 

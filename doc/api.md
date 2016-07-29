@@ -209,6 +209,33 @@ Sets a property in a new document using a json pointer
 ```
 set("/customer/contact/name")
 ```
+### setUnless
+Sets a property in a new document using a json pointer unless a condition is met
+
+
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  path   | string | No |  |
+|  value   | any | No |  |
+
+```
+setUnless(falsey(), "/customer/contact/name")
+```
+### setWhen
+Sets a property in a new document using a json pointer when a condition is met
+
+
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  path   | string | No |  |
+
+```
+setWhen(truthy(), "/customer/contact/name")
+```
 ### transform
 Passes the input document through an asynchronous transformation
 
@@ -423,7 +450,7 @@ transformWhen(matches(/.+@.+/, "/customer/contact/email", lookup(), "/customer/u
 |  template   | string | No | %s |
 
 ### get
-
+Gets a property from a document using a property path
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -431,8 +458,11 @@ transformWhen(matches(/.+@.+/, "/customer/contact/email", lookup(), "/customer/u
 |  input      | alternatives | Yes | |
 |  path   | string | Yes |  |
 
+```
+get("customer.contact.name")
+```
 ### set
-
+Sets a property in a new document using a property path
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -441,6 +471,37 @@ transformWhen(matches(/.+@.+/, "/customer/contact/email", lookup(), "/customer/u
 |  path   | string | Yes |  |
 |  value   | any | No |  |
 
+```
+set(truthy(), "customer.contact.name")
+```
+### setUnless
+Sets a property in a new document using a property path unless a condition is met
+
+
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  path   | string | No |  |
+|  value   | any | No |  |
+
+```
+setUnless(falsey(), "customer.contact.name")
+```
+### setWhen
+Sets a property in a new document using a property path when a condition is met
+
+
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | any | No | |
+|  condition   | object | Yes |  |
+|  path   | string | No |  |
+|  value   | any | No |  |
+
+```
+setWhen(truthy(), "customer.contact.name")
+```
 ### transform
 
 
@@ -485,6 +546,14 @@ transformWhen(matches(/.+@.+/, "/customer/contact/email", lookup(), "/customer/u
 |-------------|--------|--------------|-----------|
 |  input      | array | No | |
 |  template   | string | Yes |  |
+
+### isEmpty
+
+
+
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | string | No | |
 
 ### lowercase
 
