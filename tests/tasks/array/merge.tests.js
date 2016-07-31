@@ -5,7 +5,7 @@ var array = require('../../../lib/tasks/array')
 describe('merge', function() {
 
     it('should require input to be an array of objects', function(done) {
-        merge([1], {}, function(err) {
+        merge([1], {}, function(err, result) {
             assert.ok(err)
             assert.equal(err.message, 'child "input" fails because ["input" at position 0 fails because ["0" must be an object]]')
             done()
@@ -20,6 +20,16 @@ describe('merge', function() {
             assert.equal(result.c, 'xx')
             assert.equal(result.d, 4)
             assert.equal(result.e, 5)
+            done()
+        })
+    })
+
+    it.only('should compact the array', function(done) {
+        merge([{ a: 1 }, null, { b: 2 }], {}, function(err, result) {
+            assert.ifError(err)
+            assert.equal(Object.keys(result).length, 2)
+            assert.equal(result.a, 1)
+            assert.equal(result.b, 2)
             done()
         })
     })

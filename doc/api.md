@@ -12,7 +12,7 @@ Compacts arrays of objects
 compact([{ name: "fred" }, { age: 41 }, { gender: "Male" }])
 ```
 ### merge
-Merges arrays of objects
+Merges arrays of objects. Compacts null values.
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
