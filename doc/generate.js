@@ -22,12 +22,12 @@ acdc()
         with(dsl) {
             cb(sequence([
                 output(tasks),
-                map(sequence([
+                map([
                     fork({
                         library: get('library'),
                         tasks: sequence([
                             get('tasks'),
-                            map(sequence([
+                            map([
                                 fork({
                                     task: get('name'),
                                     usage: sequence([
@@ -54,7 +54,7 @@ acdc()
                                     params: sequence([
                                         transform('definition.schema', schema(), 'schema'),
                                         get('schema.children.params.children'),
-                                        map(sequence([
+                                        map([
                                             fork({
                                                 name: get('name'),
                                                 type: get('param.type'),
@@ -67,13 +67,13 @@ acdc()
                                                 ]),
                                                 default: get('param.flags.default')
                                             }),
-                                        ]), 'name', 'param')
+                                        ], 'name', 'param')
                                     ])
                                 }),
-                            ]), 'name', 'definition')
+                            ], 'name', 'definition')
                         ])
                     })
-                ]), 'library', 'tasks'),
+                ], 'library', 'tasks'),
                 set('libraries'),
                 render(template)
             ]))

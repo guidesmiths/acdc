@@ -30,7 +30,7 @@ Iterates over the input, mapping each item to the supplied task.
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
 |  input      | alternatives | No | |
-|  task   | object | Yes |  |
+|  task   | array | Yes |  |
 |  key   | string | No | key |
 |  value   | string | No | value |
 

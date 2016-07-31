@@ -52,6 +52,17 @@ describe('Map', function() {
         })
     })
 
+    it('should use implicit sequence', function(done) {
+        map(['a', 'b', 'c'], { task: [uppercase()] }, function(err, results) {
+            assert.ifError(err)
+            assert.equal(results.length, 3)
+            assert.equal(results[0], 'A')
+            assert.equal(results[1], 'B')
+            assert.equal(results[2], 'C')
+            done()
+        })
+    })
+
     it('should yield mapping errors', function(done) {
         map([1, 2, 3], {
             task: {
