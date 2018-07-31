@@ -24,7 +24,7 @@ merge([{ name: "fred" }, { age: 41 }, { gender: "Male" }])
 ```
 ## collection
 ### map
-Iterates over the input, mapping each item to the supplied task.
+Iterates over the input, mapping each item to the supplied task or tasks
 
 
 |  Parameter  |  Type  |  Mandatory   |  Default  |
@@ -562,6 +562,15 @@ setWhen(truthy(), "customer.contact.name")
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
 |  input      | string | No | |
+
+### split
+
+
+
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | string | No | |
+|  pattern   | alternatives | Yes |  |
 
 ### str
 
