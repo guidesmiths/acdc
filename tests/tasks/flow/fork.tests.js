@@ -85,7 +85,6 @@ describe('Fork', function() {
                     task: {
                         fn: function two(input, ctx, cb) {
                             cb(null, 'b')
-                            cb()
                         }
                     }
                 }
