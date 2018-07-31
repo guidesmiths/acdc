@@ -12,7 +12,7 @@
     "joi": "^6.10.1",
     "json-pointer": "^0.6.0",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.10",
     "merge-defaults": "^0.2.1",
     "moment-timezone": "^0.5.21",
     "ramda": "^0.25.0",
