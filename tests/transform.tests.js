@@ -1,14 +1,14 @@
+/* eslint-disable no-undef */
+
 var assert = require('assert')
 var acdc = require('..')
 var flow = require('../lib/tasks/flow')
 var property = require('../lib/tasks/property')
 var string = require('../lib/tasks/string')
 var logic = require('../lib/tasks/logic')
-var array = require('../lib/tasks/array')
 var collection = require('../lib/tasks/collection')
 var dsl = require('../lib/dsl')
 var async = require('async')
-var R = require('ramda')
 
 describe('AC/DC', function() {
 

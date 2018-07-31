@@ -25,7 +25,7 @@ describe('merge', function() {
     })
 
     it('should compact the array', function(done) {
-        merge([{ a: 1 },, null, undefined, { b: 2 }], {}, function(err, result) {
+        merge([{ a: 1 }, null, undefined, { b: 2 }], {}, function(err, result) {
             assert.ifError(err)
             assert.equal(Object.keys(result).length, 2)
             assert.equal(result.a, 1)

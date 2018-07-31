@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 var tasks = require('../lib/tasks')
 var fs = require('fs')
 var path = require('path')
@@ -49,7 +50,7 @@ acdc()
                                                     otherwise(output('Yes'))
                                                 ])
                                             ])
-                                        }),
+                                        })
                                     ]),
                                     params: sequence([
                                         transform('definition.schema', schema(), 'schema'),
@@ -66,10 +67,10 @@ acdc()
                                                     ])
                                                 ]),
                                                 default: get('param.flags.default')
-                                            }),
+                                            })
                                         ], 'name', 'param')
                                     ])
-                                }),
+                                })
                             ], 'name', 'definition')
                         ])
                     })
@@ -82,4 +83,3 @@ acdc()
         if (err) throw err
         fs.writeFileSync(path.join(__dirname, 'api.md'), result)
     })
-
