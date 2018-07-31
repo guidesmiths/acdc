@@ -58,7 +58,7 @@ Parses a string into a date
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
 |  input      | string | No | |
-|  format   | alternatives | No |  |
+|  format   | alternatives | No | [object Object] |
 |  timezone   | string | No |  |
 
 ```
@@ -579,6 +579,14 @@ setWhen(truthy(), "customer.contact.name")
 |  Parameter  |  Type  |  Mandatory   |  Default  |
 |-------------|--------|--------------|-----------|
 |  input      | any | No | |
+
+### trim
+
+
+
+|  Parameter  |  Type  |  Mandatory   |  Default  |
+|-------------|--------|--------------|-----------|
+|  input      | string | No | |
 
 ### uppercase
 
