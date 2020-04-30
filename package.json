@@ -16,7 +16,8 @@
     "merge-defaults": "^0.2.1",
     "moment-timezone": "^0.5.21",
     "ramda": "^0.25.0",
-    "require-all": "^3.0.0"
+    "require-all": "^3.0.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -29,7 +30,9 @@
     "test": "mocha --recursive tests",
     "lint": "eslint .",
     "precommit": "npm run test",
-    "taskdoc": "node ./doc/generate"
+    "taskdoc": "node ./doc/generate",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "GuideSmiths",
   "license": "ISC",
@@ -45,5 +48,6 @@
   "bugs": {
     "url": "https://github.com/guidesmiths/acdc/issues"
   },
-  "homepage": "https://github.com/guidesmiths/acdc"
+  "homepage": "https://github.com/guidesmiths/acdc",
+  "snyk": true
 }
