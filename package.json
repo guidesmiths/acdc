@@ -12,8 +12,8 @@
     "joi": "^13.5.2",
     "json-pointer": "^0.6.0",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.10",
-    "merge-defaults": "^0.2.1",
+    "lodash": "^4.17.16",
+    "merge-defaults": "^0.2.2",
     "moment-timezone": "^0.5.21",
     "ramda": "^0.25.0",
     "require-all": "^3.0.0"
